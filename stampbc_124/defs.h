@@ -12,8 +12,8 @@
 
 #define STAMPBC_VERSION		"stampbc v1.2.4"
 
-#define COMM_DEVICE		"/dev/ttyS"
-#define COMM_DEVICE_DEFAULT	"/dev/ttyS0"
+#define COMM_DEVICE		"/dev/ttyUSB"
+#define COMM_DEVICE_DEFAULT	"/dev/ttyUSB0"
 
 #define RECV_TIMEOUT_S          0
 #define RECV_TIMEOUT_US         250000

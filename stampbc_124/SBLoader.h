@@ -11,9 +11,9 @@
 #include <string>
 
 struct SBStampID {
-  char* send;
-  char* recv;
-  char* id;
+  const char* send;
+  const char* recv;
+  const char* id;
   int   memSlots;
 };
 
@@ -57,7 +57,7 @@ private:
 
   static SBLoader* m_pInstance;
   static const SBStampID m_stampID[];
-  static const char* m_versionID[][2];
+  static const char *m_versionID[][2];
 };
 
 #endif

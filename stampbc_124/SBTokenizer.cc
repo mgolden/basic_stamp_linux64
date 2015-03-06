@@ -18,6 +18,7 @@ using namespace std;
 
 #include "defs.h"
 #include "SBTokenizer.h"
+#include "open_tokenizer_so.h"
 
 SBTokenizer* SBTokenizer::m_pInstance = 0;
 
@@ -62,12 +63,12 @@ void SBTokenizer::free()
 //------------------------------------------------------------------------------
 bool SBTokenizer::init()
 {
-  m_libt = dlopen(TOKENIZER_SO, RTLD_LAZY);
+  m_libt = open_tokenizer_so(TOKENIZER_SO);
 
   if (m_libt) {
-    (void *)m_TestRecAlignment = dlsym(m_libt, "TestRecAlignment");
-    (void *)m_Compile = dlsym(m_libt, "Compile");
-    (void *)m_Version = dlsym(m_libt, "Version");
+    m_TestRecAlignment = (bool (*)(SBTokenizer::TModuleRec*)) dlsym(m_libt, "TestRecAlignment");
+    m_Compile = (bool (*)(SBTokenizer::TModuleRec*, char*, bool, bool)) dlsym(m_libt, "Compile");
+    m_Version = (unsigned char (*)()) dlsym(m_libt, "Version");
 
     return true;
   }

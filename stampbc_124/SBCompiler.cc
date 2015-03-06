@@ -20,6 +20,7 @@
 #include <cerrno>
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -175,8 +176,7 @@ bool SBCompiler::compile(
       // write object file
       // no objFile for syntax checking only
       if (objFile != "") {
-        int objSize;
-        objSize = writeObjectFile(objFile, m_pRec->PacketBuffer,
+        writeObjectFile(objFile, m_pRec->PacketBuffer,
           m_pRec->PacketCount);
       }
 

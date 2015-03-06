@@ -136,8 +136,8 @@ void SBLoader::setDebug(bool dbg)
 int SBLoader::typeToIndex(const string& sType)
 {
   int i = 0;
-  char* type1  = m_stampID[0].id;
-  char* pcType = (char*)sType.c_str();
+  const char* type1  = m_stampID[0].id;
+  const char* pcType = (char*)sType.c_str();
 
   while (type1 && (strcasecmp(type1, pcType) != 0)) {
     type1 = m_stampID[++i].id;

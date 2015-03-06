@@ -10,7 +10,7 @@
 
 #include "defs.h"
 
-#define TOKENIZER_SO "tokenizer.so"
+#define TOKENIZER_SO "tokenizer_1.16.so"
 
 class SBTokenizer {
 public:

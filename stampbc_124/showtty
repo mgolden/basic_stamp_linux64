@@ -1,9 +1,9 @@
 #!/bin/bash
 
 option=""
-device=${1:-"/dev/ttyS0"}
-#term=${2:-"noterm"}
-term=${2:-"xterm"}
+device=${1:-"/dev/ttyUSB0"}
+term=${2:-"noterm"}
+#term=${2:-"xterm"}
 
 if [ $term != "noterm" ]; then
 	# restart script from within an xterm

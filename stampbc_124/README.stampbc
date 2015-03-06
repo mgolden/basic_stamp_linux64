@@ -279,7 +279,7 @@ or you can specify which device to display, e.g.
   showtty /dev/ttyS1
 
 The showtty utility uses a reverse video xterm to make better use of colors.
-On the top in yellow the device name is shown, e.g. /dev/ttyS0.
+On the top in yellow the device name is shown, e.g. /dev/ttyUSB0.
 A selection of the most important parameters are displayed in cyan between the 
 white lines.
 In the lower section, all parameters are shown in detail in green color.
