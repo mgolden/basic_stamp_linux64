@@ -1,0 +1,12 @@
+'{$STAMP BS2e, test2.bse, test3.bse}
+
+Counter VAR BYTE	'Counter for LED blinks
+
+FOR Counter = 1 to 8	'Loop for 2 sec
+  PULSOUT 0,50000	'Blink LED on and off for 1/10 second
+  PAUSE 250		'Pause 1/4 second
+NEXT
+
+RUN 1
+
+STOP

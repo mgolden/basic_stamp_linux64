@@ -1,0 +1,18 @@
+TODO.txt for bstamp: BASIC Stamp Tools for Linux
+
+
+May 15, 2004
+
+General To-Do:
+
+  * Figure out cause of timeouts
+  * Clean-up command-line options (e.g., add "--help" along with "-h", etc.)
+  * Improve documentation
+
+Comments from Francis Esmonde-White:
+
+  * It would be really nice to advance the debugger by making it an interactive
+    serial session between the stamp and the terminal.
+  * I'd like to make a similar utility for the parallax sx-key programmer,
+    but parallax doesn't seem as keen as me on making it happen.
+

@@ -1,0 +1,9 @@
+The purpose of this document is to facilitate setting up a Parallax Basic Stamp development environment that runs under Linux. This will entail installing stampbc as the command line shell tool PBASIC compiler. Additionally, you can use the nEdit programmer's editor as your PBASIC IDE.
+
+To setup the stampbc command line shell tool, read the README.stampbc text document. Basically all you have to do is type 'make' to build the tool. The rest of the document tells you how to use the various stampbc command options and the showtty shell script to setup your serial port properly. Remember, the serial port cannot be used in anyway by any other process, such as your mouse. Another gotcha is knowing where to place the tokenizer.so library. Try /usr/local/lib. If when trying to use stampbc you get an error message saying that stampbc can't find tokenizer.so, you should examine your LD_LIBRARY_PATH shell variable and see if /usr/local/lib is in it. If not, add it to the LD_LIBRARY_PATH shell variable.
+
+To use the nEdit programmer's editor as your IDE for Parallax Basic Stamp PBASIC development, download nEdit from the nEdit web site http://www.nedit.org and install it for your version of Linux. Then copy the nedit_rsc file to .nedit in your $HOME directory. Run nEdit and open one of the test PBASIC test files (test.bs2). You should see the PBASIC keywords highlighted. Under the Shell menu, select stampbc and you should see a popup window showing the results of compiling the test file and attempting to download the object file (which would fail if you are not hooked up to a Basic Stamp).
+
+That's it. Have fun!
+
+Randy Hootman

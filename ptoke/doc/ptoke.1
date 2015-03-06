@@ -1,0 +1,128 @@
+.TH ptoke 1 "11 January 03" "pbasic Tools" "pbasic Tools"
+.UC 4
+.SH NAME
+ptoke \- tokenize PBASIC source code
+.SH SYNOPSIS
+.B ptoke [\-bhlpvV] [\-s <slot number>] [\-m <module type>] [\-o <out file>] FILES...
+.SH DESCRIPTION
+\fBptoke\fP tokenizes PBASIC source code for the BASIC Stamp2 family of Basic Pic
+chips sold by Parallax, Inc.  The resulting object file is then up-loadable
+to the basic stamp via  \fBpblast\fP, a sister utility to ptoke.  FILES can be 
+either PBASIC source or pre-tokenized object files.  
+.PP
+\fBptoke\fP will merge multiple input files into one object file.  The resulting
+object file, out.bso,  will contain up to 8 programs ready to be uploaded
+or merged with yet more object files. \fBptoke\fP will refuse to merge objects/source
+compiled for different versions of Basic Stamp.
+.PP
+\fBptoke\fP tokenizes all source code files after preprocessing them with m4. 
+If the tokenizer finds a syntactical error in a source file, \fBptoke\fP will 
+print error information to stderr, and exit.  Source code directives can be used
+to help \fBptoke\fP merge multiple files together.  This can also be achieved by
+invoking ptoke with \fI-s\fP and \fI-m\fP options.  Any file that is not a verifiable
+object file is treated as a source file.
+.PP
+Object files can contain from 1 to 8 (named 0-7) different objects, each with their own
+slot number designation.  The slot number can also be set with the \fI-s\fP option,
+but be weary when using it with files containing more than object, as \fBptoke\fP
+uses built-in rules when choosing layout of resulting slots( Read \fBMERGING\fP)
+\fBptoke\fP is defaulted to allow only 8 resulting objects to be made, as this
+is the current Basic Stamp slot limit.  The \fI-b\fP option will disable this limit.
+.PP
+.SH OPTIONS
+.TP 4c	
+\fI-b\fP
+Allow slot numbers > 7 in object
+.PP
+.TP 4c		
+\fI-h\fP
+Print usage					
+.PP
+.TP 4c
+\fI-l\fP
+Print version and copyright info		
+.PP
+.TP 4c
+\fI-m <type>\fP
+Specify Module type to tokenize for, where type = { 2, 2e, 2sx, 2p, 2pe }		
+.PP
+.TP 4c
+\fI-o <file>\fP
+Place output into <file>			
+.PP
+.TP 4c
+\fI-p\fP
+Do not preprocess with m4			
+.PP
+.TP 4c
+\fI-s <slot>\fP
+Use <slot> for next source file slot number	
+.PP
+.TP 4c
+\fI-v\fP
+Print verbose output
+.PP
+.TP 4c
+\fI-I <dir>\fP
+Use <dir> as m4's secondary include path			
+.PP
+.TP 4c
+\fI-V\fP
+Print hyper-verbose output	
+.PP
+.SH MERGING
+The process of merging files together happens using simple built-in rules.  
+Every input file has a slot number associated with it, or is given one with
+a preceding \fI-s\fP option.  \fBptoke\fP sequentially loads each input file, 
+and copies the source/object to a linked 
+list.  If when a slot number is taken by a prior loaded object, the tokenizer 
+will pick the next unassigned slot number for that input file.
+.SH EXAMPLES
+.TP 4c
+.B ptoke -m 2e -o obj.bso  -s 1 hello.bas
+tokenizes hello.bas for a BS 2e, at slot number 1.
+.TP 4c
+.B ptoke -o obj.bso -s 1 hello.bas -s 2 more.obj
+tokenizes hello.bas at slot 1 and merges it with more.obj at slot 2. The new object
+file is obj.bso.
+.SH SOURCE DIRECTIVES and m4 macros
+\fBptoke\fP will preprocess all source files (whether or not you have m4 installed)
+for a few extended tokenizer variables.  The last tokenizer directive in the source
+file is the one that is used for each variable.
+.TP 4c
+.B 'slot <number>
+Tells \fBptoke\fP which slot to try for. Slot 0-7 are suggested, but not
+mandatory.
+.TP 4c
+.B 'module <type>
+Tells \fBptoke\fP which module type to compile for, where type={ 2, 2e, 2sx, 2p, 2pe }
+.PP
+Make sure you prepend any m4 macros or ptoke directives with the "\fB'\fP", the basic remark character, or
+the tokenizer functions will try to tokenize them.  This will usually end up as a syntax error.
+\fBptoke\fP expects the remark (comment?) character to be the character immediately after the preceding "\\n", aka the 
+"First Column"  Both the m4 preprocessor and Parallax, Inc.'s tokenizer library do not make such a "First Column" 
+requirement. An example of m4 excerpt:
+.TP 4c
+.B 'include( foo.bar)
+will include foo.bar, and expand in the source.
+.SH HINTS
+\fBptoke\fP is 'makeable' which means it jives more-or-less with the GNU make utility.  This should make
+programming in pbasic just a touch more bareable.  Also, try using emacs with a basic major mode to edit
+source files.  This usually means syntax highlighting, tab formatting, and the rest.  Let me know if you 
+find/make a good lisp mode for pbasic.
+.SH BUGS
+yes, plenty.
+.SH SEE ALSO
+\fBpblast\fP(1), \fBmake\fP(1L)
+.SH AUTHOR
+Brett M. Gordon
+beretta@eohio.net
+.SH COPYRIGHT
+Copyright (C) Brett M. Gordon
+ 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.br
+

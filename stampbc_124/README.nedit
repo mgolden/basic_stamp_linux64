@@ -1,0 +1,5 @@
+To use the nEdit programmer's editor as your IDE for Parallax Basic Stamp PBASIC development, download nEdit from the nEdit web site http://www.nedit.org and install it for your version of Linux. Then copy the nedit_rsc file to .nedit in your $HOME directory. Run nEdit and open one of the test PBASIC test files (test.bs2). You should see the PBASIC keywords highlighted. Under the Shell menu, select stampbc and you should see a popup window showing the results of compiling the test file and attempting to download the object file (which would fail if you are not hooked up to a Basic Stamp).
+
+That's it. Have fun!
+
+Randy Hootman

@@ -1,0 +1,90 @@
+
+Ptoke - The Linux Pbasic Tokenizer Front end for BASIC Stamp II
+
+
+
+Brief Description:
+
+This is a Linux command line utility to preprocess, tokenize, and "burn"
+PBasic source files to Parallax Inc.'s Basic Stamp II series of
+microprocessors.
+
+
+
+Instalation:
+
+Please read the INSTALL file.
+
+
+
+Requirements:
+
+PBASIC_Tokenizer.tar.gz library installed.  This can be found at:
+http://www.parallax.com/html_pages/downloads/tokenizer/tokenizer.asp
+
+m4 is not required, but to make life easier while working on big projects I 
+suggest making sure its in your path ( you'd be surprised how much 
+memory a stamp 2e has...)  m4 is a text macro preprocessor that provides
+sanity for large projects.
+
+
+This library must be specially installed, please read: INSTALL
+
+
+
+Background:
+
+This development project is designed to be a gcc-like front end to the
+recently released "tokenizer.so"  ELF shared library, from Parallax Inc.
+Parallax Inc., of which I have no affiliation, produces a series of small
+dip-style microprocessor chips( complete with RAM, EEPROM, CLOCK, etc.) ,
+known collectively as "Basic Stamps"  This set of low-cost chips is
+tailored for hobbyist, and the like.  They are used by many schools,
+higher educational institutions, scientists, for teaching and other small
+applications.  (Search the web for Robot+Basic+Stamp and you'll find
+hundreds of sites featuring these nifty little microprocessor)
+
+These processors are programmed via a RS-232C serial connection to the
+chip.  They contain a "Pbasic" interpreter on-board, and hence use a java
+byte code like version of a simple (brain-dread?) BASIC language.  In order
+to program these suckers, you first write Pbasic source file, tokenize the
+source code and transmit it via the serial port to the chip itself.
+
+For years, the only way to do this was on from a computer w/ DOS or
+Windows OS, running the proprietary Parallax Inc.'s Stamp Editor Program.
+Hence, a pain in the butt to a Linux nut, like myself.  I emailed Parallax
+regarding this, got a reply with hopeful news of a answer soon.  Six
+months pasted and in October, 2002, Parallax released a tokenizer library
+for the ELF Shared Library format.  The peasants rejoiced.  This was a
+library to provide a programmer with just the "tokenizer" and "packetizer"
+part of the above described scheme.
+
+This project was started by me to provide a open source wrapper to this  
+library. It provides the source m4 preprocessing, and a uart low level to the
+chip.  This allows Linux folk to program there Stamps with a Gcc-like
+tokenizer, and download the resulting tokenized object file to there
+hardware.  I've begun adding some additional ptoke preproccesor directives to
+make life a bit easier when writing large, complex pbasic source. (for
+example, ptoke optionally pulls slot numbers and module types for source
+directives. 
+
+This wrapper is written in C, and should compile with most Linux systems
+with getopt, ioctl, and the rest of the normal stuff.  It compiles on C
+and has been limtedly tested with gcc 2.96 in Linux Kernel 2.4.2-2, using
+Red Hat's Linux 7.1 distribution.
+
+Brett M. Gordon
+beretta@eohio.net
+
+
+
+
+
+
+
+
+
+
+
+
+

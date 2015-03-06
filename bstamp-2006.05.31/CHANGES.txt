@@ -1,0 +1,52 @@
+CHANGES.txt for bstamp: BASIC Stamp Tools for Linux
+
+2006.May.31
+* Applied shtrom's patch to correct detection of BS2.
+* Updated to version 1.23 of the PBASIC tokenizer library.
+  Katie Bechtold <katie@hoteldetective.org>
+
+2004.May.11-13
+* Added support for BS2e, BS2sx, BS2p, BS2pe.
+  bstamp_run identification sequence now detects all BS2's and the respective versions.
+  bstamp_run programming now supports all BS2's and their respective programming modes.
+  Added bstamp_tokenizer POSIX pipes support.
+  Added bstamp_run POSIX pipes support.
+  Francis Esmonde-White <francis@esmonde-white.com>
+  
+2003.May.18
+* Modified bstamp_tokenize.cpp for better error reporting for when the 
+  tokenizer finds an error in the PBASIC doe
+  Brian E. Lavender <brian@brie.com>
+
+2003.Apr.20
+* Renamed bstamp_run.c to bstamp_run.cpp, since there are still some C++
+  artifacts floating around, and GCC 3.2.2 was having trouble compiling.
+  Steven Michalske <hardkrash@kc8apf.net>
+
+* Changed timeout alarm (signal) usage so it doesn't interfere during
+  successful running (waiting for DEBUG output).
+  Problem noticed by Steven Michalske
+
+2003.Apr.11
+* Set device to /dev/bstamp; simply make a symlink to the proper /dev/ttyS#
+  Bill Kendrick <bill@newbreedsoftware.com>
+
+* Changed format of CHANGES.txt
+  Bill Kendrick
+
+* Made serial I/O timeout not abort bstamp_run.
+  (Still haven't looked into WHY there's a timeout, yet.)
+  Bill Kendrick
+
+* Created 'install' and 'uninstall' targets in Makefile.
+  Bill Kendrick
+
+2003.Apr.10
+* Included PBASIC Tokenizer license.
+  Bill Kendrick <bill@newbreedsoftware.com>
+
+2003.Apr.9
+* Fixed identification sequence for BSTAMP 2.
+  Brian Lavender <brian@brie.com>
+
+

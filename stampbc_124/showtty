@@ -1,0 +1,57 @@
+#!/bin/bash
+
+option=""
+device=${1:-"/dev/ttyS0"}
+#term=${2:-"noterm"}
+term=${2:-"xterm"}
+
+if [ $term != "noterm" ]; then
+	# restart script from within an xterm
+	xterm +sb -bg black -fg white -e $0 $device noterm &
+	exit
+fi
+
+green="\033[32m"
+white="\033[37m"
+cyan="\033[36m"
+yellow="\033[33m"
+red="\033[31m"
+
+forever="1"
+
+while [ -n $forever ]; do
+	clear
+	echo -ne $yellow
+	echo "device: "$device
+
+
+	echo -ne $white
+	echo '--------------------------------------------------------------------------------'
+
+	if [ "$option" == "g" ]; then
+		option="-g"
+	fi
+
+	if [ "$option" != "" ]; then
+		echo -ne $red
+		stty -F $device $option
+	fi
+
+	if [ "$option" == "quit" ]; then
+		exit
+	fi
+
+	echo -ne $cyan
+	stty -F $device
+
+	echo -ne $white
+	echo '--------------------------------------------------------------------------------'
+
+
+	echo -ne $green
+	stty -F $device -a
+
+	echo -e $white
+	echo -n '>>' && read option
+done
+

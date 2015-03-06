@@ -1,0 +1,145 @@
+                          Parallax PBASIC Tokenizer Software License 
+                                                          
+Terms and Conditions for Distribution 
+This document, when executed by the below identified License signature,
+constitutes a License by Parallax to copy and distribute our Parallax
+PBASIC Tokenizer Library software.  
+ 
+This License is issued without compensation to Parallax to allow additional
+BASIC Stamp Development Environments to be developed on multiple platforms.   
+ 
+For rights of use beyond the scope of this License, please contact the named
+Parallax Trademark and Intellectual Property Manager at the contact information
+shown at the bottom of this License.    
+ 
+LICENSE TERMS 
+ 
+  1. Existing Software is Copyright by Parallax Licensee may copy and
+     distribute copies of the PBASIC Tokenizer Library software as received,
+     in any medium, provided that Licensee appropriately publish on each copy
+     release that the PBASIC Tokenizer Library software is copyright
+     Parallax, Inc. 2002; a disclaimer of warranty; and that any recipients
+     receive a full copy of this License either in print or included with the
+     media, as well as during software downloads from the internet. 
+ 
+  2. Distributed for No Charge Only. You may not charge for or receive any
+     compensation in any form for the PBASIC Tokenizer Library software
+     itself. Contact Parallax's Trademark and Intellectual Property Manager
+     if distributing pay-for software is part of your business plan.   
+ 
+  3. Limited Development Support from Parallax. The PBASIC Tokenizer Library
+     software is offered, as is, with development support only to the extent
+     of topics related specifically to the PBASIC Tokenizer Library that are
+     not sufficiently documented.  Parallax will not provide support for
+     anything outside of the above, including inquiries pertaining to linking
+     to specific languages, environments, etc.   
+ 
+  4. Distribution of Software Requires Signed Agreement.  If Licensee plans on
+     distributing a copy of the PBASIC Tokenizer Library software, Parallax
+     requires that Licensee submit a copy of each Licensee signed agreement
+     relating to that PBASIC Tokenizer Library software using the contact 
+     information shown at the bottom indicating that Licensee agrees to the
+     terms of this License and will administer the protections provided
+     Parallax in all subsequent Licenses issued by Licensee.  
+      
+  5. License Limitations. Licensee may not copy, modify, sublicense, or
+     distribute the PBASIC Tokenizer Library software except as expressly
+     provided under this License. Any attempt to copy or otherwise modify,
+     sublicense or distribute the PBASIC Tokenizer Library software is void,
+     and will automatically terminate these Licensed rights to make any
+     further distribution. Should Licensee desire to broaden these Licensed
+     rights contact our Trademark and Intellectual Property Manager to
+     negotiate an amendment to this agreement. Parties who have received
+     copies, or rights, or Licenses from you under this License will not
+     have their licenses terminated so long as such parties remain in full
+     compliance.  
+ 
+  6. Signed License Required. To effectuate this license you must return the
+     signed copy to Parallax Inc. (with a copy of the licensee's drivers
+     license) to the contact person shown below by fax or mail.
+ 
+  7. License Transfers with Software. Each time Licensee redistributes the
+     PBASIC Tokenizer Library software, the recipient must automatically
+     receive a license with a copy of the original License before being
+     allowed to copy and distribute the PBASIC Tokenizer Library software
+     subject to these terms and conditions. Licensee may not impose any
+     further restrictions on the recipients' exercise of the rights granted
+     herein. Licensee is not responsible for enforcing compliance by 
+     third parties to this License, though any recipient who chooses to
+     distribute the PBASIC Tokenizer Library software is subject to the
+     Licensee restrictions set forth in paragraph five.
+      
+  8. WARRANTY. There is no warranty for the PBASIC Tokenizer Library software.
+     Parallax provides the PBASIC Tokenizer Library software "as is", without
+     warranty of any kind, either expressed or implied. The entire risk as to
+     the quality and performance of the software lies with the recipient.
+
+  9. No Parallax Liability. In no event will Parallax be liable to Licensee
+     and or third party for damages; including general, special, incidental
+     or consequential damages arising out of the use or inability to use the
+     software (including but not limited to loss of data or data being
+     rendered inaccurate or losses sustained to you by 3rd parties), even if
+     such holder or other party has been advised of the possibility of such
+     damages. Parallax will not be liable for any designs using
+     PBASIC Tokenizer Library software that might result in injury, death or
+     any damage to or beyond the user's cost of the product Licensed or
+     purchased from Parallax. Licensee agrees to indemnify, hold harmless,
+     defend and protect Parallax against any claims for damages to property
+     or injury or death of any persons asserted to arise out of any use of
+     this Licensed PBASIC Tokenizer Library software.
+  
+ 10. No Rights to Parallax Hardware. If a recipient of our PBASIC Tokenizer
+     Library software attempts to create and sell a BASIC Stamp device
+     (that does not use original Parallax PBASIC Interpreter chips), their
+     License is immediately invalid. In this case the Licensee and each
+     sub-License acknowledges that Parallax will pursue all required further
+     action, either legally or through mediation, to protect its interests
+     between the two parties. 
+     
+ 11. Parallax may Refuse License. Parallax, Inc. reserves the right to
+     refuse to grant or continue any license for any reason, including
+     reasons listed in the above paragraphs. 
+     
+LICENSE EXECUTION FOR PBASIC TOKENIZER LIBRARY SOFTWARE 
+ 
+Contact Information: For questions not addressed by this agreement contact: 
+ 
+Debbie Vickers (e-mail dvickers@parallaxinc.com) 
+Trademark and Intellectual Property Manager 
+Parallax, Inc. 
+599 Menlo Ste 100 
+Rocklin, CA 95765 
+(916) 627-8333, fax (916) 624-8003 
+ 
+Sincerely, 
+ 
+Chip Gracey 
+President 
+ 
+License Execution: 
+
+This license is effectuated by the following Licensee at this date: ___________
+ 
+Indicate all the platforms on which you intend to use the PBASIC Tokenizer
+Library Software: 
+ 
+  [ ]  PBASIC Tokenizer for Windows 
+          
+  [ ]  PBASIC Tokenizer for Linux 
+          
+  [ ]  PBASIC Tokenizer for Macintosh 
+ 
+ 
+Name:             ___________________  Company:          _____________________
+
+Address:          ___________________  City, State, ZIP: _____________________
+
+Telephone Number: ___________________  Fax Number:       _____________________
+
+E-mail:           ___________________  Web Address:      _____________________
+ 
+ 
+Return the signed License, along with a copy of the Licensee's valid drivers
+license, to Parallax at the aove address or by fax and it is considered
+executed. 
+

@@ -1,0 +1,398 @@
+stampbc - STAMP Basic Compiler
+------------------------------
+
+tokenizer.so provided by Parallax Inc., Rocklin, CA USA (www.parallax.com).
+stampbc developped and provided by Adrian Schneider, Basel, Switzerland
+(adrian.schneider@tiscalinet.ch)
+
+version 2.1
+-----------
+
+BUGFIX:
+fixed a object buffer size bug which caused a segmentation fault if an
+object file was bigger than 2048 byte (object files can be 2304 bytes).
+
+EXPERIMENTAL:
+Added preliminary support for the new BS2px module. The BS2px programs at
+19200bps and debugs at 38400bps instead of 9600bps as the other modules do!.
+Programs are tokenized for the BS2pe - a warning is issued to report this
+fact (it might also be the cause of the different programming/debugging
+speeds, as the BS2pe has different timing constants).
+Yoy have to use the option -iBS2px explicitly when compiling for the BS2px.
+A $STAMP BS2PX directive in the code will issue an error from the tokenizer.
+The -i option however overrides this directive.
+
+FEATURE:
+overhauled showtty tool. Some new commands have been added:
+help	display help for the stty command (using 'less', type q to return to
+	the showtty screen)
+bs	setup comm port options for stamp communication with a BS2/e/sx/p/pe
+bspx	as 'bs' but set properties for the BS2px
+d	set comm port settings for debugging (icrnl)
+p	set comm port settings for programming (-icrnl)
+debug	set comm port settings for debugging and open an xterm with limited
+	(output only) debug capability.
+	You need to kill that window and use the 'p' command before you can
+	download to the stamp again since it blocks the comm port.
+
+version 2.0.1
+-------------
+
+fixed a few incompatibilities with other compilers in SBTokenizer.cc
+
+version 2.0
+-----------
+
+added the new tokenizer 1.23 which supports PBasic 2.5. The -m and -M
+options print the language version detected by the tokenizer.
+
+added some byte and word size testing to defs.h so it would complain
+about just in case...
+
+version 1.2.5
+-------------
+
+reworked the reset/break condition sequence which was not quite after
+the specifiection in "BASIC Stamp Programming Protocol".
+
+version 1.2.4
+-------------
+
+tweaked the reset pulse timing - later 1.2.3 versions already contained this
+tweak.
+
+fixed a bug which printed the whole source if the tokenizer reported an
+error length of 0.
+
+added option -M and modified the behaveiour of option -m. -m now just
+reports RAM and percentage memory usage, which is the information that is
+usually needed. -M reports EEPROM layout and contents beside memory usage
+(as -m did before version 1.2.4).
+
+the percentage memory usage bar is now placed at the end of the memory info
+section.
+
+Randy Hootman provided an improved version of the showtty script which copes
+better with non-xterm environments. You now can enter 'quit' to terminate
+showtty. Instead of '-g' you can also just type 'g' which does the same
+(stty -F/dev/... -g).
+
+Some color added to the EEPROM content, layout and RAM usage listings.
+
+version 1.2.3
+-------------
+
+this version just fixes a bug with the reset pulse. DTR is cleared, then
+set and cleared again. In previous releases DTR was left set which caused
+the stamp to be hold in reset state if you connect DTR directly to your
+stamp's ATN pin. If you connected the DTR to ATN via series and parallel
+capacitors (recommended for improved noise resistance) the level of DTR
+did not matter. However, it now works in both cases.
+
+version 1.2.2
+-------------
+
+no major new features have been added.
+
+minor tidy up - there were instances of string::data() which were replaced by
+c_str(). Replaced deprecated c headers by c++ standard headers (thanks to
+Randy Hootman).
+
+now using namespace std - newer environments require explicitly using namespace
+std - mine did not - to compile corretcly (thanks to Walti Senn).
+
+minor cosmetic changes to the memory map (RAM register) output.
+
+SBCompiler::printOffendingLine - there was an implementation restriction which
+caused a misaligned error locator if the source containd tabs instead of
+just blanks. This has been fixed.
+
+added a percentage bar to viusalize the memory occupancy beyond a purely
+numerical display.
+
+stampbc
+-------
+
+stampbc (stamp basic compiler) is a pbasic compiler utility based on the
+tokenizer library provided bi PARALLAX Inc. It allows to compile pbasic
+programs, download object code any basic stamp of type BS2, BS2e, BS2sx
+BS2p and BS2pe (Honestly, I have not tested the BS2pe as I don't have one).
+
+To use stampbc you have to compile and install it first. For details see
+below.
+
+
+examples
+--------
+
+Use stampbc without any options to display a usage summary:
+
+  stampbc
+
+  stampbc [OPTIONS] [FILENAME]
+    -c       compile single file only
+    -C       compile project only
+    -d       download only
+    -h       help
+    -i type  identify specified stamp type
+    -j       let program identify the stamp
+    -m       output memory usage
+    -M       output memory map and usage
+    -n       syntax check only
+    -o file  with -c use object file name
+    -p port  use specified port for download
+    -s slot  download to specified slot
+    -v       verbose
+    -V       print stampbc and tokenizer version
+
+To display the current version of stampbc and the version of the tokenizer
+library incorporated use:
+
+  stampbc -V
+
+  stampbc v2.0, compiler using PARALLAX tokenizer library 1.23
+
+BTW: You can just replace the tokenizer.so file to apply a newer version as
+long as it remains compatible with the previous one - this was not the
+case when changing from v1.16 to v1.23.
+
+To test the communication between the computer and the stamp, try:
+
+  stampbc -j
+
+This runs an identification procedure. If successful the result should look
+something like this (for a BS2e type stamp):
+
+  trying to identify the stamp
+  -- stamp is a BS2e, firmware v1.0
+
+If the stamp can not be identified, is not connected, not powered or if the 
+serial port settings are incorrect it may look like this:
+
+  trying to identify the stamp
+  ** no stamp or unable to identify
+
+
+A sample BS2 program is provided for testing - it is the same as in the 
+tokenizer documentation by PARALLAX.
+
+  '{$STAMP BS2}
+
+  Counter VAR BYTE        'Counter for LED blinks
+
+  FOR Counter = 1 to 20   'Loop 20 times
+    PULSOUT 0,50000       'Blink LED on and off for 1/10 second
+    PAUSE 250             'Pause 1/4 second
+  NEXT
+  STOP
+
+To compile it (without downloading the object code to a stamp) use:
+
+  stampbc -c test.bs2
+
+This should produce a new file 'test.o' which can be examined using hexdump:
+
+  hexdump test.o
+
+  0000000 00fe 0000 0000 0000 0000 1418 8c20 d80e
+  0000010 7cc8 0eff 4a60 e8ae 499f 50c1 6fc3 d18d
+  0000020 0703 60c0                              
+  0000024
+
+
+To download 'test.o' to a BS2 stamp use:
+ 
+  stampbc -d test.o
+
+You can also compile and download with just a single command:
+
+  stampbc test.bs2
+
+
+stampbc options
+---------------
+
+  -c       compile single file only
+
+Just compile the source file [FILENAME] specified and produce a .o-file.
+Multiple source projects are ignored.
+
+  -C       compile project only
+
+Virtually the same as -c. However, multiple source (the one given plus up to 7) 
+projects are also compiled and a .o-file is produced for each.
+
+  -d       download only
+
+Download the .o-file [FILENAME] to the stamp only. You have to specify the
+stamp type using -i and also the slot number using -s for multi bank stamps. 
+
+  -h       help
+
+Display this command summary.
+
+  -i type  identify specified stamp type
+
+Specify the stamp type. Valid stamp types are BS2, BS2e, BS2sx, BS2p, BS2pe.
+BS2 is the default if -i is not used.
+This option overrides the {$STAMP} directive from the source.
+
+  -j       let program identify the stamp
+
+Start a stamp identification procedure. The type and firmware version number
+are displayed if the stamp could be identified.
+
+  -m       output memory usage
+
+Display variable RAM and memory usage after compile. This option is ignored if
+compilation is inhibited by an other option (e.g. -d).
+
+  -M       output memory map and usage
+
+Display a detailed memory map and memory usage info after compile. This option
+is ignored if compilation is inhibited by an other option (e.g. -d).
+
+  -n       syntax check only
+
+Compile the source but do not produce a .o-file. Use for syntax checks or for
+just creating a memory map.
+
+  -o file  with -c use object file name
+
+Use an alternate name for the .o-file. The default for a source file
+mysource.bs2 is mysource.o .
+
+  -p port  use specified port for download
+
+Use an alternate serial port for downloading and identifying. Default is
+/dev/ttyS0. The {$PORT} directive from the source overrides the default.
+This option overrides the default and the {$PORT} directive as well.
+
+  -s slot  download to specified slot
+
+Use the specified slot number to download the .o-file to a multi bank stamp.
+This option is only useful and needed together with the -d option.
+
+  -v       verbose
+
+Display some additional information during processing. May be helpful during
+debugging or trouble shooting.
+
+  -V       print stampbc and tokenizer version
+
+Print the version number of stampbc and the tokenizer.so shared library.
+
+
+installation
+------------
+
+You have to unpack the tar-ball, compile and install stampbc. A simple Makefile
+is provided therefore.
+Create a new directory, cd to this directory an copy the tar-ball there.
+
+as a normal user
+
+  tar -zxf stampbc.tar.gz
+
+  make clean
+  make
+
+as superuser
+
+  make install
+
+You can also try stampbc from the current directory, but you have to provide
+the location for the tokenizer.so library so the shared library loader can
+find it:
+
+  LD_LIBRARY_PATH=./ ./stampbc
+
+The install target does much the same thing (see Makefile for details). It
+copies the executable under a modiefied name '__stampbc' and creates a short
+script named 'stampbc' which calls '__stampbc'.
+
+By default the executable is installed to /usr/local/bin and the tokenizer
+library to /usr/local/lib.
+
+
+showtty
+-------
+
+showtty is a bash script which uses the 'stty' command in different ways to 
+show the serial port settings in a readable format and which allows the user to
+change settings quickly with just a few keystrokes.
+BTW: I heavyly used this script to fiddle around with the serial port settings
+when I implemented the download procedure for stampbc. It was very handy, so
+I decided to include it here.
+
+You can copy showtty to /usr/local/bin to make it generally available. If
+this is the case call showtty with no parameter to show the settings for
+/dev/ttyS0 - the default.
+
+  showtty
+
+or you can specify which device to display, e.g.
+
+  showtty /dev/ttyS1
+
+The showtty utility uses a reverse video xterm to make better use of colors.
+On the top in yellow the device name is shown, e.g. /dev/ttyS0.
+A selection of the most important parameters are displayed in cyan between the 
+white lines.
+In the lower section, all parameters are shown in detail in green color.
+
+If you don't want to use an xterm start showtty with option noterm as second
+parameter (modify the script to change the default behaveiour).
+
+  showtty /dev/ttyS0 noterm
+
+To change settings just enter them at the >> prompt, as you would when using
+the stty command directly. The new settings will immediately take effect.
+
+Enter -g (or just g) at the >> prompt to get a to print all the current
+settings in a stty-readable format (displayed in red color). Just copy andpaste
+the string from the terminal window.
+
+Enter quit to terminate the script. 
+
+comm settings
+-------------
+
+To communicate with the basic stamp, the serial interface settings have to
+be setup correctly. Not every setting is really critical. A setup that should
+work is listed below (as reported by showtty).
+
+Depending on your system the defaults may vary. To achieve the setting below
+I had to enter the following commands at the >> prompt:
+
+  9600 raw -echo -hupcl
+
+'-echo' is important since the basic stamp has loopback circuitry on its main
+serial port (pin 16 from stamp basic, physically pins 1 SOUT and 2 SIN).
+'raw' means that the byte stream is transmitted unchanged as it is provided
+by the program.
+
+'-hupcl' avoids certain unintended stamp resets upon opening the serial line.
+
+device: /dev/ttyS0
+--------------------------------------------------------------------------------
+speed 9600 baud; line = 0;
+min = 1; time = 0;
+-brkint -icrnl -imaxbel
+-opost
+-isig -icanon -echo
+--------------------------------------------------------------------------------
+speed 9600 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>;
+eol2 = <undef>; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W;
+lnext = ^V; flush = ^O; min = 1; time = 0;
+-parenb -parodd cs8 hupcl -cstopb cread clocal -crtscts
+-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon
+-ixoff -iuclc -ixany -imaxbel
+-opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0
+ff0
+-isig -icanon iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echoctl echoke
+
+>>
+

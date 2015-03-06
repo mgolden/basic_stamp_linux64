@@ -1,0 +1,59 @@
+
+Ptoke - The Linux Pbasic Tokenizer Front end for BASIC Stamp II
+
+Brief Description:
+
+This is a Linux command line utility to preprocess, tokenize, and "burn"
+PBasic source files to Parallax Inc.'s Basic Stamp II series of
+Microprocessors.
+
+Details:
+
+This development project is designed to be a gcc-like front end to the
+recently released "tokenizer.so"  ELF shared library, from Parallax Inc.
+Parallax Inc., of which I have no affiliation, produces a series of small
+dip-style microprocessor chips( complete with RAM, EEPROM, CLOCK, etc.) ,
+known collectively as "Basic Stamps"  This set of low-cost chips is
+tailored for hobbyist, and the like.  They are used by many schools,
+higher educational institutions, scientists, for teaching and other small
+applications.  (Search the web for Robot+Basic+Stamp and you'll find
+hundreds of sites featuring these nifty little microprocessor)
+
+These processors are programmed via a RS-232C serial connection to the
+chip.  They contain a "Pbasic" interpreter on-board, and hence use a java
+byte code like version of a simple (brain-dread?) BASIC language.  In order
+to program these suckers, you first write Pbasic source file, tokenize the
+source code and transmit it via the serial port to the chip itself.
+
+For years, the only way to do this was on from a computer w/ DOS or
+Windows OS, running the proprietary Parallax Inc.'s Stamp Editor Program.
+Hence, a pain in the butt to a Linux nut, like myself.  I emailed Parallax
+regarding this, got a reply with hopeful news of a answer soon.  Six
+months pasted and in October, 2002, Parallax released a tokenizer library
+for the ELF Shared Library format.  The peasants rejoiced.  This was a
+library to provide a programmer with just the "tokenizer" and "packetizer"
+part of the above described scheme.
+
+This project was started by me to provide a open source wrapper to this  
+library. It provides the source reprocessing, and a uart low level to the
+chip.  This allows Linux folk to program there Stamps with a Gcc-like
+"Interpreter", and download the resulting tokenized object file to there
+hardware.  I've begun adding some basic preproccesor directives, like 
+#include, and hope to get help with macros, and the such, from other
+programmers.
+
+This wrapper is written in C, and should compile with most Linux systems
+with getopt, ioctl, and the rest of the normal stuff.  It compiles on C
+and has been limtedly tested with gcc 2.96 in Linux Kernel 2.4.2-2, using
+Red Hat's Linux 7.1 distribution.
+
+I have searched extensively for a similar program, and have found none.
+I had to do it myself. This not my first program by far, but is the first
+in many years (since bbs days) and is my first offering to the Open Source
+Movement.
+
+Brett M. Gordon
+beretta42
+beretta@eohio.net
+
+

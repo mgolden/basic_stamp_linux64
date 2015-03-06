@@ -1,0 +1,46 @@
+COPYING.txt for bstamp: BASIC Stamp Tools for Linux
+
+Bill Kendrick
+bill@newbreedsoftware.com
+April 10, 2003
+
+updated:
+Francis Esmonde-White
+francis@esmonde-white.com
+May 13, 2004
+
+This archive contains code licensed under the GNU General Public License (GPL).
+
+  bstamp_run.cpp
+  bstamp_tokenize.cpp   [ based on example code from Parallax, Inc. ]
+
+Please see GPL.txt for the full license.
+
+
+
+This archive ALSO currently contains code and a binary shared library object
+licensed under the Parallax PBASIC Tokenizer Software License.
+
+  tokenizer.h
+  tokenizer.so
+
+Please see PBASIC_Tokenizer_Software_Distribution_License.txt
+(or the PDF PBASIC_Tokenizer_Software_Distribution_License.pdf)
+for the full license.
+
+
+DO NOT USE OR DISTRIBUTE THIS SOFTWARE UNTIL FULFILLING THE REQUIREMENTS
+OF THESE LICENSES!
+
+
+
+Note:  The PBASIC Tokenizer license is fairly incompatible with the GPL.
+       (Points 2, 4, 5, 6, and others.)  Due to this, I feel we should no
+       longer distribute Parallax's code and binary in this archive.
+       The software is available as a free download from www.parallax.com.
+       At that point, the end-user will need to deal with Parallax's license.
+
+       The Atari800 project (http://atari800.atari.org/) does something
+       similar to this when it uses the Atari OS ROMs which were distributed
+       (with permission from Atari) with the demo version of PC Xformer 2.5.
+

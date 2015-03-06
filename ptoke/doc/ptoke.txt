@@ -1,0 +1,135 @@
+NAME
+       ptoke - tokenize PBASIC source code
+
+SYNOPSIS
+       ptoke  [-bhlpvV] [-s <slot number>] [-m <module type>] [-o
+       <out file>] FILES...
+
+DESCRIPTION
+       ptoke tokenizes PBASIC source code for  the  Basic  Stamp2
+       family  of  Basic  Pic  chips  sold by Parallax, Inc.  The
+       resulting object file is  then  uploadable  to  the  basic
+       stamp via  /fBpblast/fP, a sister utility to ptoke.  FILES
+       can be either PBASIC source or pre-tokenized object files.
+
+       ptoke  will  merge  multiple  input  files into one object
+       file.  The resulting object file, out.bso,   will  contain
+       up  to  8 programs ready to be uploaded or merged with yet
+       more  object   files.   ptoke   will   refuse   to   merge
+       objects/source  compiled  for  different versions of Basic
+       Stamp.
+
+       ptoke tokenizes all source code files after  preprocessing
+       them  with  m4.  If the tokenizer finds a syntatical error
+       in a source file, ptoke will print  error  information  to
+       stderr,  and  exit.  Source code directives can be used to
+       help ptoke merge mulitple files together.  This  can  also
+       be acheived by invoking ptoke with -s and -m options.  Any
+       file that is not a verifiable object file is treated as  a
+       source file.
+
+       Object files can contain from 1 to 8 (named 0-7) different
+       objects, each with their own slot number designation.  The
+       slot  number  can  also  be set with the -s option, but be
+       weary when  using  it  with  files  containing  more  than
+       object,  as  ptoke uses builtin rules when choosing layout
+       of resulting slots( Read MERGING) ptoke  is  defaulted  to
+       allow  only 8 resulting objects to be made, as this is the
+       current Basic Stamp slot limit.  The -b option  will  dis­
+       able this limit.
+
+OPTIONS
+       -b      Allow slot numbers > 7 in object
+
+       -h      Print usage
+
+       -l      Print version and copyright info
+
+       -m  <type> Specify Module type to tokenize for, where type
+               = { 2, 2e, 2sx, 2p, 2pe }
+
+       -o <file> Place output into <file>
+
+       -p      Do not preprocess with m4
+
+       -s <slot> Use <slot> for next source file slot number
+
+       -v      Print verbose output
+
+       -V      Print hyper-verbose output
+
+MERGING
+       The process of merging files together happens using simple
+       builtin rules.  Every input file has a slot number associ­
+       ated with it, or is given one with a preceeding -s option.
+       ptoke  sequentially  loads each input file, and copies the
+       source/object to a linked list.  If when a slot number  is
+       taken  by  a  prior loaded object, the tokenizer will pick
+       the next unassigned slot number for that input file.
+EXAMPLES
+       ptoke -m 2e -o obj.bso -s 1 hello.bas
+                       tokenizes hello.bas for a BS 2e,  at  slot
+                       number 1.
+
+       ptoke -o obj.bso -s 1 hello.bas -s 2 more.obj
+                       tokenizes  hello.bas  at slot 1 and merges
+                       it with more.obj at slot 2. The new object
+                       file is obj.bso.
+
+SOURCE DIRECTIVES and m4 macros
+       ptoke will preprocess all source files (whether or not you
+       have m4 installed) for a few extended tokenizer variables.
+       The last tokenizer directive in the source file is the one
+       that is used for each variable.
+
+       'slot <number>  Tells ptoke which slot to  try  for.  Slot
+                       0-7 are suggested, but not manditory.
+
+       'module <type>  Tells  ptoke  which module type to compile
+                       for, where type={ 2, 2e, 2sx, 2p, 2pe }
+
+       Make sure you prepend any m4 macros  or  ptoke  directives
+       with the "'", the basic remark character, or the tokenizer
+       functions will try to tokenize them.   This  will  usually
+       end  up as a syntax error.  ptoke expects the remark (com­
+       ment?) character to be the character immediately after the
+       preceeding  "\n", aka the "First Column"  Both the m4 pre­
+       processor and Parallax, Inc.'s tokenizer  library  do  not
+       make  such  a "First Column" requirement. An example of m4
+       excert:
+
+       'include( foo.bar)
+                       will include foo.bar, and  expand  in  the
+                       source.
+       Make sure you prepend any m4 macros  or  ptoke  directives
+       with the "'", the basic remark character, or the tokenizer
+       functions will try to tokenize them.   This  will  usually
+       end  up as a syntax error.  ptoke expects the remark (com­
+       ment?) character to be the character immediately after the
+       preceeding  "\n", aka the "First Column"  Both the m4 pre­
+       processor and Parallax, Inc.'s tokenizer  library  do  not
+       make  such  a "First Column" requirement. An example of m4
+       excert:
+
+       'include( foo.bar)
+                       will include foo.bar, and  expand  in  the
+                       source.
+
+FILES
+BUGS
+       yes, plenty.
+
+SEE ALSO
+       pblast(1)
+
+AUTHOR
+       Brett M. Gordon beretta@eohio.net
+
+COPYRIGHT
+       Copyright (C) Brett M. Gordon
+
+       This  program  is  free  software; you can redistribute it
+       and/or modify it under the terms of the GNU General Public
+       License  as  published  by  the  Free Software Foundation;
+       either version 2 of the License, or (at your  option)  any
+       later version.

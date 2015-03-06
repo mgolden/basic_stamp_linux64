@@ -1,0 +1,113 @@
+.TH pblast 1 "11 January 03" "pbasic Tools" "pbasic Tools"
+.UC 4
+.SH NAME
+pblast \- upload pbasic object code to BASIC Stamp chip
+.SH SYNOPSIS
+.B pblast [\-hilv] <\-d <device>> [\-m <module type>] FILES...
+.SH DESCRIPTION
+
+\fBpblast\fP is a utility to "burn" or upload tokenized pbasic objects file(s)
+to a BASIC Stamp chip as sold by Parallax, Inc.  \fBpblast\fP uses a RS-232c
+serial port to do the dirty work of transmitting CRC'd packets of 
+data to the Stamp chip.  See \fBHardware\fP for cabling.  \fBpblast\fP uses
+data files (object files) as produced by the \fBptoke\fP program.
+.PP
+\fBpblast\fP requires the specification of a serial device file when
+communicating with the Stamp chip. This will usually be one of the 
+following: /dev/ttyS0 /dev/ttyS1, or the like.
+.PP
+\fBpblast\fP will work on multiple object files. However, \fBpblast\fP does
+not do any slot number checking.  I suggest using \fBptoke\fP to assemble a composite
+object file, and then burn just it using \fBblast\fP, since ptoke does check for
+slot number conflicts.      
+.PP
+\fBpblast\fP will optionally enter into a debug mode after uploading all
+files, and reseting the basic chip.  Use the \fI-i\fP option to enable
+debugging.  This toggle causes pblast not to reset the DTR-ATTN line after 
+uploading, and prints incoming serial data from the chip on stdout, until SIGINT.
+
+.PP
+.SH OPTIONS
+
+.TP 4c
+\fI-d <device>\fP
+Use serial device file <device> REQUIRED
+.PP
+
+.TP 4c
+\fI-h\fP
+Pring usage
+.PP
+
+.TP 4c
+\fI-i\fP
+Enter debug mode after uploading
+.PP
+
+.TP 4c
+\fI-l\fP
+Print version and copywrite info
+.PP
+
+.TP 4c
+\fI-m <type>\fP
+Specify module type to expect, where type = { 2, 2e, 2sx, 2p, 2pe }
+.PP
+
+.TP 4c
+\fI-v\fP
+Print verbose output
+.PP
+.SH HARDWARE
+\fBpblast\fP transmits and receives 9600 baud rs232 style date via the
+standard pins (TX and RX).  But \fBpblast\fP uses the DTR pin for the
+BASIC Stamp chip's ATTN line, so a certain computer to stamp to chip
+cabling usually must be used.  Here's the matrix:
+.IP
+Function		DB9     DB25    Stamp pin
+.PP
+.IP
+Data to stamp	3		2		2
+.IP
+Data fr stamp	2		3		1
+.IP
+Attention		4		20		3
+.IP
+Ground		5		7		4
+.PP
+This arrangement is identicle to the standard DB to BASIC Stamp 
+cabling as documented and sold by Parallax, Inc.  Additionally,
+you may with to install a toggle switch for the DTR line to allow
+for standard terminal programs (e.g. minicom) to easy talk to 
+the stamp chip without resetting it via the DTR line.  Also, one
+might wish to loop the DSR/RTS pins to defeat your terminal/uart's
+requirement for hardware handshaking.
+.pp
+.SH EXAMPLES
+.TP 4c
+.B pblast -d /dev/ttyS1 obj.bso obj2.bso
+Uploads obj.bso and obj2.bso to chip connected at /dev/ttyS1
+.TP 4c
+.B pblast -d /dev/ttyS0 obj.bso -iv
+Uploads obj.bso to chip connect at /dev/ttyS0, verbosely, and
+then enter debug mode.
+
+.SH BUGS
+yes, plenty.
+.SH SEE ALSO
+\fBptoke\fP(1)
+.SH AUTHOR
+Brett M. Gordon
+beretta@eohio.net
+.SH COPYRIGHT
+Copyright (C) Brett M. Gordon
+ 
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.br
+
+
+
+

@@ -1,0 +1,14 @@
+
+pblast:
+
+'make' complains of errors, esp. Exit Code [6], after all went well after a burn.
+	-fix prog's exit codes
+
+
+Only works with the BS-2 and the BS-2e chips
+	-fix lazy programmer
+	-call parallax screaming about inconsistant and complex ID sequences.
+
+
+
+

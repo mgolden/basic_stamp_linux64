@@ -1,0 +1,53 @@
+Ptoke - The Linux Pbasic Tokenizer Front end for BASIC Stamp II
+
+
+
+Brief Description:
+
+This is a Linux command line utility to reprocesses, tokenize, and "burn"
+PBasic source files to Parallax Inc.'s Basic Stamp II series of
+microprocessors.
+
+
+
+Requirements:
+
+PBASIC_Tokenizer.tar.gz library installed.  This can be found at:
+http://www.parallax.com/html_pages/downloads/tokenizer/tokenizer.asp
+
+m4 is not required, but to make life easier while working on big projects I 
+suggest making sure its in your path ( you'd be surprised how much 
+memory a stamp 2e has...)  m4 is a text macro preprocessor that provides
+sanity for large projects.
+
+I personally find the basic-mode.el proglet for emacs handy for hacking
+Basic Stamp source.
+
+
+
+Installation:
+
+First download and install the PBASIC Tokenizer lib from above.  Then do
+something similar to this (must be root user):
+
+foobar# tar -xzf PBASIC_Tokenizer.tar.gz
+foobar# cd linux
+foobar# cp tokenizer.so /usr/local/lib/libtoken.so
+foobar# chmod 755 /usr/local/lib/libtoken.so
+foobar# ldconfig
+
+Basically:  unzip the tar ball, rename and move the lib to your
+/usr/local/lib directory, chmod, and ldconfig the ldd service. be Careful 
+with the libtoken.so filename, as ptoke depends on finding this lib.
+
+All set? Good.  Now edit Makefile for your personal settings (bin dir)
+and save. do:
+
+foobar$ make
+foobar$ make install
+
+You should now have 2 executables in your bin directory:  ptoke, and pblast.  
+ptoke makes the object files and pblast uploads them to your stamp.
+
+Brett M. Gordon
+beretta@eohio.net
