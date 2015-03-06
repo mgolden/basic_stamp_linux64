@@ -32,11 +32,11 @@ default_option="raw -echo -hupcl"
 debug_option="icrnl"
 prog_option="-icrnl"
 
-device=${1:-"/dev/ttyS0"}
-#term=${2:-"noterm"}
-term=${2:-"xterm"}
+device=${1:-"/dev/ttyUSB0"}
+term=${2:-"noterm"}
+#term=${2:-"xterm"}
 
-if [ $term != "noterm" ]; then
+if [ $term == "xterm" ]; then
 	# restart script from within an xterm
 	xterm +sb -bg black -fg white -e $0 $device noterm &
 	exit

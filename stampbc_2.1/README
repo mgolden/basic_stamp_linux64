@@ -265,7 +265,7 @@ mysource.bs2 is mysource.o .
   -p port  use specified port for download
 
 Use an alternate serial port for downloading and identifying. Default is
-/dev/ttyS0. The {$PORT} directive from the source overrides the default.
+/dev/ttyUSB0. The {$PORT} directive from the source overrides the default.
 This option overrides the default and the {$PORT} directive as well.
 
   -s slot  download to specified slot
@@ -327,7 +327,7 @@ I decided to include it here.
 
 You can copy showtty to /usr/local/bin to make it generally available. If
 this is the case call showtty with no parameter to show the settings for
-/dev/ttyS0 - the default.
+/dev/ttyUSB0 - the default.
 
   showtty
 
@@ -336,7 +336,7 @@ or you can specify which device to display, e.g.
   showtty /dev/ttyS1
 
 The showtty utility uses a reverse video xterm to make better use of colors.
-On the top in yellow the device name is shown, e.g. /dev/ttyS0.
+On the top in yellow the device name is shown, e.g. /dev/ttyUSB0.
 A selection of the most important parameters are displayed in cyan between the 
 white lines.
 In the lower section, all parameters are shown in detail in green color.
@@ -344,7 +344,7 @@ In the lower section, all parameters are shown in detail in green color.
 If you don't want to use an xterm start showtty with option noterm as second
 parameter (modify the script to change the default behaveiour).
 
-  showtty /dev/ttyS0 noterm
+  showtty /dev/ttyUSB0 noterm
 
 To change settings just enter them at the >> prompt, as you would when using
 the stty command directly. The new settings will immediately take effect.
@@ -374,7 +374,7 @@ by the program.
 
 '-hupcl' avoids certain unintended stamp resets upon opening the serial line.
 
-device: /dev/ttyS0
+device: /dev/ttyUSB0
 --------------------------------------------------------------------------------
 speed 9600 baud; line = 0;
 min = 1; time = 0;

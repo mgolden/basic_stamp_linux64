@@ -1,13 +1,13 @@
 .SUFFIXES: .o .cc
 
 EXEC   = stampbc 
-OBJS   = stampbc.o SBTokenizer.o SBCompiler.o SBProject.o SBLoader.o
+OBJS   = stampbc.o SBTokenizer.o SBCompiler.o SBProject.o SBLoader.o open_tokenizer_so.o
 LIBS   = -ldl
-CFLAGS = -Wall -D_COLORFUL
-#CFLAGS = -g -Wall -D_COLORFUL
+#CFLAGS = -Wall -D_COLORFUL -m32
+CFLAGS = -g -Wall -D_COLORFUL -m32
 CC     = g++ $(CFLAGS)
 
-INSTALLROOT = /usr/local
+INSTALLROOT = /usr/local/basic_stamp
 INSTBINPATH = $(INSTALLROOT)/bin
 INSTLIBPATH = $(INSTALLROOT)/lib
 INSTSCRIPT  = $(INSTBINPATH)/$(EXEC)

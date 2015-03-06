@@ -1,6 +1,8 @@
 #ifndef __DEFS_H
 #define __DEFS_H
 
+#include <limits.h>
+
 //******************************************************************************
 // defs.h
 //
@@ -37,8 +39,8 @@ typedef unsigned short int word;
 
 #define STAMPBC_VERSION		"stampbc v2.1(2005)"
 
-#define COMM_DEVICE		"/dev/ttyS"
-#define COMM_DEVICE_DEFAULT	"/dev/ttyS0"
+#define COMM_DEVICE		"/dev/ttyUSB"
+#define COMM_DEVICE_DEFAULT	"/dev/ttyUSB0"
 
 #define RECV_TIMEOUT_S          0
 #define RECV_TIMEOUT_US         250000

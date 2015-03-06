@@ -11,7 +11,7 @@
 
 #include "defs.h"
 
-#define TOKENIZER_SO "tokenizer.so"
+#define TOKENIZER_SO "tokenizer_1.23.so"
 
 class SBTokenizer {
 public:

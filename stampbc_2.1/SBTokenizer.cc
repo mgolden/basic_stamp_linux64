@@ -18,6 +18,7 @@ using namespace std;
 
 #include "defs.h"
 #include "SBTokenizer.h"
+#include "open_tokenizer_so.h"
 
 SBTokenizer* SBTokenizer::m_pInstance = 0;
 
@@ -62,7 +63,7 @@ void SBTokenizer::free()
 //------------------------------------------------------------------------------
 bool SBTokenizer::init()
 {
-  m_libt = dlopen(TOKENIZER_SO, RTLD_LAZY);
+  m_libt = open_tokenizer_so(TOKENIZER_SO);
 
   if (m_libt) {
     void* p(0);
