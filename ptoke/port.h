@@ -22,16 +22,16 @@ enum module_type {None, Reserved, bs2, bs2e, bs2sx, bs2p, bs2pe};
 
 /* Interface Functions */
 
-int p_init(char *devname);
-int p_term();
-int p_reset();
+void p_init(const char *devname);
+int p_term(void);
+int p_reset(void);
 enum module_type p_ident(char *type, char *version);
 int p_proginit(int progslot);
-int p_progblast( char *buff);
-int p_complete();
-int p_halt();
-int p_deinit();
-int returnfd();
+int p_progblast( void *buff);
+int p_complete(void);
+int p_halt(void);
+void p_deinit(void);
+int returnfd(void);
 
 
 

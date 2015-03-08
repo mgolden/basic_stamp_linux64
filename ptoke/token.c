@@ -25,7 +25,11 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#include <dlfcn.h>
+
 #include "token.h"
+
+#include "open_tokenizer_so.h"
 
 #define PTOKE_DESC "ptoke - Linux pbasic tokenizer\n"
 
@@ -54,7 +58,9 @@ int preproc( FILE *tmp, char *filename, struct fileattrib *attrib);
 FILE *m4preproc( char *filename);
 void printusage(char function);
 
-
+int initialize(int argc, char *argv[]);
+int bseopen(char *filename);
+void pwerror(void);
 
 int main(int argc, char *argv[]){
 
@@ -62,6 +68,7 @@ int main(int argc, char *argv[]){
   tokenize();
   createbso();
   error_handle( "ptoke", "Finished", 4, 0);
+  return(0);
 }
 
 
@@ -135,9 +142,30 @@ int initialize(int argc, char *argv[]){
       break;
     }
   }
+
+  /* Open shared library: */
+
+  void * hso = open_tokenizer_so(TOKENIZER_SO);
+
+  /* (Map functions in tokenizer.so) */
+
+  Compile = (STDAPI(*)(TModuleRec *, char *Src, bool DirectivesOnly,
+			bool ParseStampDirectives))dlsym(hso,"Compile");
+
+
+  /* (Test for any errors) */
+
+  char *error = dlerror();
+
+  if (error != NULL)
+  {
+    perror(error);
+    dlclose(hso);
+    exit(EXIT_FAILURE);
+  }
   return(0);
 }
-  
+
 
     
 /* This func the does brunt of the work.  It adds a bso file
@@ -261,9 +289,10 @@ int addfile( char *optarg){
     }
     ptr->SlotNumber=slot;
   }
-  snprintf( s, 255, "Accually added %d record(s)", y);
+  snprintf( s, 255, "Actually added %d record(s)", y);
   error_handle( optarg, s, 0, 0);
   close(fd);
+  return(0);
 }
 
 
@@ -280,23 +309,24 @@ void printusage(char func){
     exit(0);
   }
   if( func=='h'){
-    fprintf( out, "%s%s", PTOKE_DESC, "Usage: ptoke [options] file...
-      Options:							
-      -b		Allow slot numbers > 7 in object		
-      -h		Print usage					
-      -l		Print version and copyright info		
-      -m <type>	        Specify Module type to tokenize for		
-      -o <file>	        Place output into <file>			
-      -p		Do not preprocess with m4			
-      -s <slot>	        Use <slot> for next source file slot number	
-      -v		Print verbose output
-      -I <dir>          use <dir> as secondary m4 include dir     
-      -V		Print hyper-verbose output			
-		  
-For more info see documentation.				
-Report bugs to: beretta42@eohio.net				
-or see: https://sourceforge.net/projects/ptoke/			
-");
+    fprintf( out, "%s%s", PTOKE_DESC,
+	     "Usage: ptoke [options] file...\n"
+	     "Options:\n"
+	     " -b		Allow slot numbers > 7 in object\n"
+	     " -h		Print usage\n"
+	     " -l		Print version and copyright info\n"
+	     " -m <type>	        Specify Module type to tokenize for\n"
+	     " -o <file>	        Place output into <file>\n"
+	     " -p		Do not preprocess with m4\n"
+	     " -s <slot>	        Use <slot> for next source file slot number\n"
+	     " -v		Print verbose output\n"
+	     " -I <dir>          use <dir> as secondary m4 include dir\n"
+	     " -V		Print hyper-verbose output\n"
+	     "\n"
+	     "For more info see documentation.\n"
+	     "Report bugs to: beretta42@eohio.net\n"
+	     "or see: https://sourceforge.net/projects/ptoke/\n"
+	   );
     exit(1);
   }
 }
@@ -465,8 +495,6 @@ int bseopen(char *filename){
 int tokenize(){
 
   struct ProgramRecord *current=ProgramHead;
-  int x,y;
-  char s[255];
   
   if(current==NULL){
     error_handle( "ptoke", "No records to tokenize", 1, 27);
@@ -589,7 +617,7 @@ int createbso(){
   return(0);
 }
 
-int pwerror(){
+void pwerror(void){
   error_handle( "ptoke", "Cannot write out file", 1, 32);
 }
 

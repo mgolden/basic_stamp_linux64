@@ -34,12 +34,20 @@ struct BsoRecord Record;
 
 int Verbose=0;
 enum module_type Module=None, Chip=None;
-char *Device=NULL;
+const char *Device="/dev/ttyUSB0";
 int filefd;
 int Interactive=0;
 
 void printusage(char out);
 
+void parse_command( int argc, char *argv[]);
+void prog_init(void);
+void loadheader(char *filename);
+void loadrecord(void);
+void blastrecord(void);
+void debug(void);
+void deinit(void);
+void error_handle( char *string, int type, int no);
 
 int main(int argc, char *argv[]){
 
@@ -59,10 +67,11 @@ int main(int argc, char *argv[]){
   p_reset();
   if( Interactive) debug();
   deinit();
+  return(0);
 }
   
 
-int parse_command( int argc, char *argv[]){
+void parse_command( int argc, char *argv[]){
 
   char c;
   if( argc==1) printusage('h');
@@ -92,9 +101,8 @@ int parse_command( int argc, char *argv[]){
       error_handle( "Unknown module type in command line", 1, 1);
       break;
     case 'd':
-      Device=calloc( strlen(optarg)+1, 1);
+      Device=strdup(optarg);
       if ( Device==NULL ) error_handle( "Unable to allocate memory", 1, 2);
-      strcpy( Device, optarg);
       break;
     case 'h':
       printusage('h');
@@ -107,7 +115,7 @@ int parse_command( int argc, char *argv[]){
 }
 
 
-int prog_init(){
+void prog_init(void){
 
   char type[10], version[10];
 
@@ -130,7 +138,7 @@ int prog_init(){
   
 
 
-int loadheader(char *filename){
+void loadheader(char *filename){
 
   int x=0;
 
@@ -147,11 +155,10 @@ int loadheader(char *filename){
     if( x==-1) error_handle( "Cannot load object header.", 1, 6);
     else error_handle( "Object file too short.", 1, 10);
   }
-  return(0);
 }
 
 
-int loadrecord(){
+void loadrecord(void){
 
   int x=0;
 
@@ -164,7 +171,7 @@ int loadrecord(){
 
 }
 
-int blastrecord(){
+void blastrecord(void){
 
   int x=0, y=0, z=0;
 
@@ -184,7 +191,7 @@ int blastrecord(){
 }
 
 
-int deinit(){
+void deinit(void){
 
   close(filefd);
   p_deinit();
@@ -205,25 +212,26 @@ void printusage(char func){
     exit(0);
   }
   if( func=='h'){
-    fprintf( out, "%s%s", PTOKE_DESC, "Usage: pblast [options] file...
-      Options:							
-      -d <device>      	Use serial device file <device>		
-      -h		Print usage
-      -i                Enter debug mode after uploading batch
-      -l		Print version and copyright info		
-      -m <type>	        Specify module type to expect				
-      -v		Print verbose output							
-		  
-For more info see documentation.				
-Report bugs to: beretta42@eohio.net				
-or see: https://sourceforge.net/projects/ptoke/			
-");
+    fprintf( out, "%s%s", PTOKE_DESC,
+	     "Usage: pblast [options] file...\n"
+	     "Options:\n"
+	     " -d <device>      	Use serial device file <device>\n"
+	     " -h		Print usage\n"
+	     " -i                Enter debug mode after uploading batch\n"
+	     " -l		Print version and copyright info\n"
+	     " -m <type>	        Specify module type to expect\n"
+	     " -v		Print verbose output\n"
+	     "\n"
+	     "For more info see documentation.\n"
+	     "Report bugs to: beretta42@eohio.net\n"
+	     "or see: https://sourceforge.net/projects/ptoke/\n"
+	   );
     exit(1);
   }
 }
 
 
-int error_handle( char *string, int type, int no){
+void error_handle( char *string, int type, int no){
 
   if ( type==1) {
     fprintf(stderr, "Fatal Error: %s, No. %d\n", string, no);
@@ -232,12 +240,12 @@ int error_handle( char *string, int type, int no){
 
   if( type==2) {
     fprintf(stderr, "Warning: %s, No. %d\n", string, no);
-    return(0);
+    return;
   }
 }
 
 
-int debug(){
+void debug(void){
   
   fd_set input;
   int x;
@@ -257,6 +265,5 @@ int debug(){
       fprintf( stderr, "%s", buf);
     }
   }while(1);
-  return(0);
 }
 

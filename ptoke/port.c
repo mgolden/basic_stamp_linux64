@@ -26,6 +26,9 @@
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <strings.h>
 
 #include "port.h"
 
@@ -39,7 +42,7 @@ int p_read(char *buf);
 
 
 
-int p_init(char *devname){
+void p_init(const char *devname){
 
   int status;
 
@@ -68,7 +71,7 @@ int p_init(char *devname){
 
 
 
-int p_reset(){
+int p_reset(void){
 
   int status;
   int x=0, y=0;
@@ -98,7 +101,7 @@ int p_reset(){
     status &= ~TIOCM_DTR;
 
     if( ioctl( fd, TIOCMSET, &status ) ) p_fatal_error(9);
-    exit();
+    exit(0);
 
   }
   return(0);
@@ -138,12 +141,16 @@ enum module_type p_ident(char *type, char *version){
 	      if(!p_read(&c) ) {
 		sprintf(type, "2"); 
 		y=c&15; x=c>>4;
-		sprintf(version, "%d.%d");
+		sprintf(version, "%d.%d", x, y);
 		return(bs2);
-	      }}}}}}
+	      }
+	    }
+	  }
+	}
+      }
+    }
   }
-
-      
+  return(-1);
 }
 
 
@@ -182,7 +189,7 @@ int p_read(char *buf){
 
 
 
-int p_complete(){
+int p_complete(void){
 
   char c=0;
   
@@ -217,7 +224,7 @@ int p_proginit( int progslot){
 
 
 
-int p_progblast( char *buff){
+int p_progblast( void *buff){
 
   char rbuff[19];
 
@@ -235,7 +242,7 @@ int p_progblast( char *buff){
   return( (int)rbuff[18] );
 }
 
-int p_halt(){    /* This Doesn't Work, Anyone care to fix? */
+int p_halt(void){    /* This Doesn't Work, Anyone care to fix? */
 
   int status;
 
@@ -245,13 +252,13 @@ int p_halt(){    /* This Doesn't Work, Anyone care to fix? */
   return(0);
 }
   
-int p_deinit(){
+void p_deinit(void){
 
   tcsetattr( fd, TCSAFLUSH, &old_term);
   close(fd);
 }
 
-int returnfd(){
+int returnfd(void){
   return(fd);
 }
 

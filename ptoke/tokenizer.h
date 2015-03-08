@@ -20,7 +20,7 @@
   
 #undef bool                         
 #define bool byte		            
-  
+
 struct TModuleRec
 {
   bool Succeeded;           /*Pass or failed on compile*/
@@ -46,3 +46,13 @@ struct TModuleRec
   byte PacketBuffer[2304];  /*packet data*/
 };
   
+typedef struct TModuleRec TModuleRec;
+
+/* Define STDAPI as type for imported function from shared library */
+#define STDAPI    uint8_t         	/* define STDAPI */
+
+/* Function prototype for function included from .so */
+STDAPI (*Compile)(TModuleRec *, char *Src, bool DirectivesOnly,
+		      bool ParseStampDirectives);
+
+#define TOKENIZER_SO "tokenizer_1.16.so"
