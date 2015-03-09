@@ -1,6 +1,8 @@
 /* Basic Stamp communication */
 
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
 
 enum {
   MODEL_BS2,
@@ -13,7 +15,7 @@ enum {
   MODEL_UNKNOWN
 };
 
-char * model_names[MODEL_UNKNOWN + 1] = {
+const char * model_names[MODEL_UNKNOWN + 1] = {
   "Basic Stamp 2",
   "Basic Stamp 2e",
   "Basic Stamp 2sx",
@@ -53,7 +55,7 @@ extern int errno;
 
 //int show_usage=FALSE;
 
-char *device="/dev/bstamp";
+const char *device="/dev/ttyUSB0";
 //int probe_number=1;
 //int battery_ok=FALSE;
 int timeout=DEFAULT_TIMEOUT;
@@ -86,6 +88,11 @@ int main(int argc, char **argv)
 	int ready_for_debug=0;
 	char recvchar;
 
+	const char * bsdev = getenv("BSTAMP_DEVICE");
+	if(bsdev) {
+	  device = strdup(bsdev);
+	}
+	
 	if (argc == 2)
 	{
 	if (strlen(argv[1])>4) // use the filename (like infile.tok) to program the Stamp
@@ -110,15 +117,13 @@ int main(int argc, char **argv)
 		{
 			fprintf(stderr, "Error: No BASIC Stamp identified!\n");
 			fprintf(stderr, "Probably the stamp isn't connected, perhaps your stamp version isn't supported?\n");
-			fprintf(stderr, "Try looking at the help, try '");
-			fprintf(stderr, argv[0]);
-			fprintf(stderr, " -h' for more information.\n");
+			fprintf(stderr, "Try looking at the help, try '%s -h' for more information.\n", argv[0]);
 			exit(1);
 		}
 	}
 	else if (argv[1][0]=='-')
 	{
-		if (argv[1][1]=='h'|argv[1][1]=='?')
+		if ((argv[1][1]=='h')|(argv[1][1]=='?'))
 		{
 			fprintf(stderr, "\nBasic Stamp Linux Programmer / Debugger\n\n");
 			fprintf(stderr, "This program is used to program and run a basic stamp.\n");
@@ -148,9 +153,7 @@ int main(int argc, char **argv)
 		}
 		else if (argv[1][1]=='v')
 		{
-			fprintf(stderr, "bstamp_run version 2004-05-12\n current filename: ");
-			fprintf(stderr, argv[0]);
-			fprintf(stderr, "\n");
+			fprintf(stderr, "bstamp_run version 2004-05-12\n current filename: %s\n", argv[0]);
 			exit(0);
 		}
 		else if (argv[1][1]=='a')
@@ -185,29 +188,21 @@ int main(int argc, char **argv)
 			{
 				fprintf(stderr, "Error: No BASIC Stamp identified!\n");
 				fprintf(stderr, "Probably the stamp isn't connected, perhaps your stamp version isn't supported?\n");
-				fprintf(stderr, "Try looking at the help, try '");
-				fprintf(stderr, argv[0]);
-				fprintf(stderr, " -h' for more information.\n");
+				fprintf(stderr, "Try looking at the help, try '%s -h' for more information.\n", argv[0]);
 				exit(1);
 			}
 		}
 		else
 		{
-			fprintf(stderr, argv[0]);
-			fprintf(stderr, ": -- invalid call\n");
-			fprintf(stderr, "Try looking at the help, try '");
-			fprintf(stderr, argv[0]);
-			fprintf(stderr, " -h' for more information.\n");
+			fprintf(stderr, "%s: -- invalid call\n", argv[0]);
+			fprintf(stderr, "Try looking at the help, try '%s -h' for more information.\n", argv[0]);
 			exit(0);
 		}
 	}
 	else
 	{
-		fprintf(stderr, argv[0]);
-		fprintf(stderr, ": -- invalid call\n");
-		fprintf(stderr, "Try looking at the help, try '");
-		fprintf(stderr, argv[0]);
-		fprintf(stderr, " -h' for more information.\n");
+		fprintf(stderr, "%s: -- invalid call\n", argv[0]);
+		fprintf(stderr, "Try looking at the help, try '%s -h' for more information.\n", argv[0]);
 		exit(0);
 	}
 	}
@@ -239,27 +234,20 @@ int main(int argc, char **argv)
 		{
 			fprintf(stderr, "Error: No BASIC Stamp identified!\n");
 			fprintf(stderr, "Probably the stamp isn't connected, perhaps your stamp version isn't supported?\n");
-			fprintf(stderr, "Try looking at the help, try '");
-			fprintf(stderr, argv[0]);
-			fprintf(stderr, " -h' for more information.\n");
+			fprintf(stderr, "Try looking at the help, try '%s -h' for more information.\n", argv[0]);
 			exit(1);
 		}
 	}
 	else
 	{
-		fprintf(stderr, argv[0]);
-		fprintf(stderr, ": -- invalid call\n");
-		fprintf(stderr, "Try looking at the help, try '");
-		fprintf(stderr, argv[0]);
-		fprintf(stderr, " -h' for more information.\n");
+		fprintf(stderr, "%s: -- invalid call\n", argv[0]);
+		fprintf(stderr, "Try looking at the help, try '%s -h' for more information.\n", argv[0]);
 		exit(0);
 	}
 
 
   if (ready_for_debug)
   {
-  	int num_read=0;
-
 	fprintf(stderr, "DEBUG OUTPUT:     (Press [Control]-[C] to complete sequence)\n");
 	fprintf(stderr, "_____________________________________________________________________\n");
 	fflush(stderr);
@@ -749,7 +737,7 @@ void BS2_sendfile()
   char recvbuf[18];
   char recvchar;
 
-if (model = MODEL_BS2)
+if (model == MODEL_BS2)
 {
 	do
 	{
@@ -785,7 +773,7 @@ else if(model!=MODEL_UNKNOWN) // BS2e, BS2sx, BS2p, BS2pe
 		if (num_read > 0)
 		{
 
-			fprintf(stderr, "%d characters transmitted\n", TEMP_FAILURE_RETRY (write(fd, buf, num_read)));  // send 18-byte packet
+			fprintf(stderr, "%ld characters transmitted\n", TEMP_FAILURE_RETRY (write(fd, buf, num_read)));  // send 18-byte packet
 
 			tcflush(fd,TCIFLUSH);
 			usleep(500000);
@@ -835,7 +823,7 @@ void BS2_sendfile(char * fname)
   unsigned char recvbuf[18];
   unsigned char recvchar;
 
-if (model = MODEL_BS2)
+if (model == MODEL_BS2)
 {
 	in_fd = open(fname, O_RDONLY);
 	if (in_fd == -1)
@@ -884,7 +872,7 @@ else if(model!=MODEL_UNKNOWN) // BS2e, BS2sx, BS2p, BS2pe
 		if (num_read > 0)
 		{
 
-			fprintf(stderr, "%d characters transmitted\n", TEMP_FAILURE_RETRY (write(fd, buf, num_read)));  // send 18-byte packet
+			fprintf(stderr, "%ld characters transmitted\n", TEMP_FAILURE_RETRY (write(fd, buf, num_read)));  // send 18-byte packet
 
 			tcflush(fd,TCIFLUSH);
 			usleep(500000);

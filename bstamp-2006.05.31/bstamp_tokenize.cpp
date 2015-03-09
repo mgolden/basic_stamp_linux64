@@ -39,7 +39,7 @@
 #include <sys/types.h>
 
 #include "tokenizer.h"
-
+#include "open_tokenizer_so.h"
 
 /* Globals: */
 
@@ -62,7 +62,7 @@ int main(int argc, char * argv[])
   	fprintf(stdout, "2 arguments!\n");
   	if (argv[1][0]=='-')
 	{
-		if (argv[1][1]=='h'|argv[1][1]=='?')
+		if ((argv[1][1]=='h')|(argv[1][1]=='?'))
 		{
 			fprintf(stderr, "\nBasic Stamp Linux Tokenizer\n\n");
 			fprintf(stderr, "This program is used to tokenize a basic stamp 2 source file.\n");
@@ -80,9 +80,7 @@ int main(int argc, char * argv[])
 		}
 		else if (argv[1][1]=='v')
 		{
-			fprintf(stderr, "bstamp_tokenizer version 2004-05-12\n current filename: ");
-			fprintf(stderr, argv[0]);
-			fprintf(stderr, "\n");
+			fprintf(stderr, "bstamp_tokenizer version 2004-05-12\n current filename: %s\n", argv[0]);
 			exit(0);
 		}
 		else if (argv[1][1]=='a')
@@ -112,13 +110,15 @@ int main(int argc, char * argv[])
   else
   {
 	fprintf(stderr, "%s: invalid option -- %s\n", argv[0], argv[1]);
-	fprintf(stderr, "%Try '%s -h' for more information.\n", argv[0]);
+	fprintf(stderr, "Try '%s -h' for more information.\n", argv[0]);
 	exit(EXIT_FAILURE);
   }
 
 
   /* Open shared library: */
 
+  hso = open_tokenizer_so(TOKENIZER_SO);
+  
   /* (Function prototypes): */
 
   STDAPI (*GetVersion)(void);
@@ -127,20 +127,6 @@ int main(int argc, char * argv[])
   STDAPI (*doTestRecAlignment)(TModuleRec *);
 
 
-  /* (Open the .so; first try in $LD_LIBRARY_PATH) */
-
-  hso = dlopen("libbstamptokenizer.so", RTLD_LAZY);
-  if (!hso)
-  {
-    perror(dlerror());
-
-    hso = dlopen("./tokenizer.so", RTLD_LAZY);
-    if (!hso)
-    {
-      perror(dlerror());
-      exit(EXIT_FAILURE);
-    }
-  }
 
 
   /* (Map functions in tokenizer.so) */

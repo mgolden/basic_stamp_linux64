@@ -15,7 +15,7 @@
 # May 13, 2004
 
 
-CFLAGS=-Wall
+CFLAGS=-Wall -m32
 
 BIN_PREFIX=/usr/local/bin
 LIB_PREFIX=/usr/local/lib
@@ -50,10 +50,14 @@ clean:
 bstamp_run:	bstamp_run.o
 	$(CXX) $(CFLAGS) bstamp_run.o -o bstamp_run
 
-bstamp_tokenize:	bstamp_tokenize.o
-	$(CXX) $(CFLAGS) bstamp_tokenize.o -o bstamp_tokenize -ldl
+bstamp_tokenize:	bstamp_tokenize.o open_tokenizer_so.o
+	$(CXX) $(CFLAGS) bstamp_tokenize.o open_tokenizer_so.o -o bstamp_tokenize -ldl
 
 bstamp_run.o:	bstamp_run.cpp
+	$(CXX) $(CFLAGS) -c bstamp_run.cpp
 
-bstamp_tokenize.o:	bstamp_tokenize.cpp tokenizer.h
+bstamp_tokenize.o:	bstamp_tokenize.cpp tokenizer.h open_tokenizer_so.h
+	$(CXX) $(CFLAGS) -c bstamp_tokenize.cpp
 
+open_tokenizer_so.o: open_tokenizer_so.cpp open_tokenizer_so.h
+	$(CXX) $(CFLAGS) -c open_tokenizer_so.cpp

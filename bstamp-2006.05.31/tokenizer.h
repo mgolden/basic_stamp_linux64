@@ -90,3 +90,5 @@ extern "C"
 }
 #endif
 
+#define TOKENIZER_SO "tokenizer_1.23.so"
+
