@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 
+extern "C" {
+#include <unistd.h>
+}
+
 #include "stamp.h"
 
 using namespace std;
@@ -32,6 +36,7 @@ string stamp::get_devicePort()
 		return parallaxStamp.get_devicePort();
 	else if (vender.compare("Coridium") == 0)
 		return coridiumStamp.get_devicePort();
+	else return NULL;
 }
 
 string stamp::get_model()
@@ -40,6 +45,7 @@ string stamp::get_model()
 		return parallaxStamp.get_model();
 	else if (vender.compare("Coridium") == 0)
 		return coridiumStamp.get_model();
+	else return NULL;
 }
 
 float stamp::get_firmware()
@@ -48,6 +54,7 @@ float stamp::get_firmware()
 		return parallaxStamp.get_firmware();
 	else if (vender.compare("Coridium") == 0)
 		return coridiumStamp.get_firmware();
+	else return 0.0;
 }
 
 bool stamp::setup(void) 
@@ -91,6 +98,7 @@ bool stamp::send_file(string file, int slot) {
 		return parallaxStamp.stamp_sendfile(file, slot);
 	else if (vender.compare("Coridium") == 0)
 		return coridiumStamp.stamp_sendfile(file);
+	return 0;
 }
 
 int stamp::get_fd()
@@ -99,6 +107,7 @@ int stamp::get_fd()
 		return parallaxStamp.get_fd();
 	else if (vender.compare("Coridium") == 0)
 		return coridiumStamp.get_fd();
+	return 0;
 }
 
 void stamp::debug_end()

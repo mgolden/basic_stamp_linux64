@@ -101,7 +101,12 @@ Installing as root:
             them by typing:
             
             make install
-             
+
+            ---------------------------------------------------
+            NOTE: None of the below will be necessary on a
+            modern machine with a USB port instead of a serial.
+            ---------------------------------------------------
+
             If necessary make com1 and com2 serial ports:
 
             MAKEDEV /dev/ttyS0 (NOTE: Use a zero not an 'O'.)
@@ -125,8 +130,6 @@ Installing as root:
             Voila, you should now be able to use the     
             command line version of bside.  
 
-            NOTE: Please be aware 'ldconfig' will be run
-                  as part of the 'make install' process.
 
 Installing using sudo:
 
@@ -138,6 +141,11 @@ Installing using sudo:
             make (or 'make all')
 
             sudo make install
+
+            ---------------------------------------------------
+            NOTE: None of the below will be necessary on a
+            modern machine with a USB port instead of a serial.
+            ---------------------------------------------------
 
             If necessary make com1 or com2 serial port:
 
@@ -162,8 +170,7 @@ Installing using sudo:
             Voila, you should now be able to use the 
             command line version of bside.
 
-            NOTE: Please be aware 'ldconfig will be run as part of
-                  the 'make install' process
+            ---------------------------------------------------
 
 
 USB NOTES:    As you might have noticed we didn't mention anything

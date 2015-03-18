@@ -6,10 +6,13 @@
 #include <cerrno>
 
 /* C Specific Includes */
+extern "C" {
+#include <stdlib.h>
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+}
 
 /* Our Own includes */
 #include "Coridium.h"
@@ -234,7 +237,7 @@ void Coridium::stamp_sendCmd(int num) {
 				tempChar = char(3);
 				write(fd, &tempChar, 1);
 				break;
-		defaut:
+		default:
 				break;
 	}
 }

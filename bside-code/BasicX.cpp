@@ -17,7 +17,7 @@ using namespace std;
 
 BasicX::BasicX()
 {
-	devicePort = "/dev/ttyS0";
+	devicePort = "/dev/ttyUSB0";
 	firmwareVer = 0;
 	model = "";
 }

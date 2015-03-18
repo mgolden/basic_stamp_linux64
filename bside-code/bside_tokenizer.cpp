@@ -16,6 +16,7 @@
    Parallax, Inc.
 */
 
+extern "C" {
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,8 +24,10 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+}
 
 #include "tokenizer.h"
+#include "open_tokenizer_so.h"
 
 /* Globals: */
 TModuleRec *ModuleRec;
@@ -52,23 +55,9 @@ int main(int argc, char *args[])
 	STDAPI (*CompileIt)(TModuleRec *, char *Src, bool DirectivesOnly, bool ParseStampDirectives, TSrcTokReference *Ref);
 	STDAPI (*doTestRecAlignment)(TModuleRec *);
 	  
-	/* (Open the .so; TO DO: first try in $LD_LIBRARY_PATH ?) */
-	   
-	hso = dlopen("/usr/local/lib/libbsidetokenizer.so", RTLD_LAZY);
-	 
-	if (!hso)
-	{
-		perror(dlerror());
-		printf("\nTrying local directory...");
+	/* Open the .so */
 
-		hso = dlopen("./tokenizer.so", RTLD_LAZY);
-		if (!hso)
-		{
-			perror(dlerror());
-			exit(EXIT_FAILURE);
-		}
-		printf("FOUND!\n");
-	}
+	hso = open_tokenizer_so(TOKENIZER_SO);
 	  
 	/* (Map functions in tokenizer.so) */
 
@@ -91,7 +80,7 @@ int main(int argc, char *args[])
 	ModuleRec = (TModuleRec *)malloc(sizeof(TModuleRec));
 
 	/* Display version of tokenizer */
-	PBasic_tokenizer_ver = (float)(GetVersion()/100);
+	PBasic_tokenizer_ver = (((float)GetVersion())/100.0);
 	printf("PBASIC Tokenizer Library version %1.2f\n\n", PBasic_tokenizer_ver);
 
 

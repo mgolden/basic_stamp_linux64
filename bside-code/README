@@ -39,13 +39,13 @@ Installing:
 		2.) > make
 		3.) > sudo make install
 
-  	if necessary, make the com1 or com2 serial port
+	if necessary (almost certainly not), make the com1 or com2 serial port
   		> MAKEDEV /dev/ttyS0	(For com1)
 		> MAKEDEV /dev/ttyS1	(For com2)
 
   	If you have set up a symbolic link to the serial port, you can use this link by passing the -d argument at run time. See help for usage
 
-	USB support requires the FTDI driver. This driver is included in the Linux kernel, but might not be enabled. See your distribution documentation for enabling the driver. USB boards can be accessed by using the -d argument to pass the correct device port. (For Example. bside -d /dev/ttyUSB0)
+	USB support requires the FTDI driver. This driver is included in the Linux kernel, but might not be enabled. See your distribution documentation for enabling the driver. USB boards should appear as /dev/ttyUSB0, which is now the default device.
 
 Known Issues:
 -------------

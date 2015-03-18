@@ -109,3 +109,5 @@ struct TModuleRec
 #if defined(__cplusplus)
 }
 #endif
+
+#define TOKENIZER_SO "tokenizer_1.23.so"

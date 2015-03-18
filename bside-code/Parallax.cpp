@@ -5,9 +5,12 @@
 #include <cerrno>
 
 /* C Specific Includes */
+extern "C" {
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+#include <unistd.h>
+}
 
 /* Our Own includes */
 #include "Parallax.h"
@@ -16,7 +19,7 @@ using namespace std;
 
 Parallax::Parallax()
 {
-	devicePort = "/dev/ttyS0";
+	devicePort = "/dev/ttyUSB0";
 	firmwareVer = 0;
 	model = "";
 }
@@ -284,7 +287,7 @@ char Parallax::stamp_send_bytes(char snd)
 
 bool Parallax::stamp_sendfile(string myFile, int programSlot)
 {
-	int write_sz, read_sz;
+	int read_sz;
 	char buffer[18];
 	char outbuffer[18];
 	char ackChar;
@@ -312,7 +315,7 @@ bool Parallax::stamp_sendfile(string myFile, int programSlot)
 	{
 		read_sz = inFile.gcount();
 			
-		write_sz = write(fileno(device),buffer, read_sz);
+		write(fileno(device),buffer, read_sz);
 			
 		tcflush(fileno(device),TCIFLUSH);
 		usleep(500000);

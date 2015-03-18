@@ -17,8 +17,14 @@
 #include <fstream>
 #include <cerrno>
 #include <iomanip>
+
+extern "C" {
 #include <signal.h>
 #include <getopt.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+}
 
 #include "stamp.h"
 
@@ -65,7 +71,6 @@ static void version()
 
 int main(int argc, char **argv)
 {	
-	bool mode_verbose = false;
 	bool mode_test = false;
 	int opt; 
 
@@ -174,7 +179,6 @@ int main(int argc, char **argv)
 /* Debug output  */
 void stamp_debug(void)
 {
-	int num_read = 0;
 	fd = myStamp.get_fd();
 	char recvchar;
 
