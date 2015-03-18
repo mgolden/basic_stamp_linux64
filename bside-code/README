@@ -1,0 +1,85 @@
+BSide - Basic Stamp IDE
+
+PBASIC tokenizer library by, and some code based on examples from,
+Parallax, Inc.  Copyright (c) 2002.  All rights reserved.
+http://www.parallax.com/
+
+PBASIC is a trademark and BASIC Stamp is a registered trademark of
+Parallax, Inc.
+
+August 8, 2006
+
+Authors:
+--------
+	Scott Sloan
+	devscott@charter.net
+	http://www.devscott.org
+
+About:
+------
+	BSide aims to be a full integraded development environment for the Basic Stamp line of microcontrollers. 
+
+Which Stamps are Supported?:
+----------------------------
+	To view a full list of supported stamps, see http://www.devscott.org/projects/bside/stamps.htm
+
+	Parallax (http://www.parallax.com)
+		BS2, BS2e, BS2sx, BS2p40, BS2pe, BS2px,	BS2p24
+	Coridium (http://www.coridiumcorp.com)
+		ARMexpress
+
+Compiling:
+----------
+	You should simply be able to run "make" to compile the tools from source.
+
+Installing:
+-----------
+	Steps to install
+		1.) > make clean
+		2.) > make
+		3.) > sudo make install
+
+  	if necessary, make the com1 or com2 serial port
+  		> MAKEDEV /dev/ttyS0	(For com1)
+		> MAKEDEV /dev/ttyS1	(For com2)
+
+  	If you have set up a symbolic link to the serial port, you can use this link by passing the -d argument at run time. See help for usage
+
+	USB support requires the FTDI driver. This driver is included in the Linux kernel, but might not be enabled. See your distribution documentation for enabling the driver. USB boards can be accessed by using the -d argument to pass the correct device port. (For Example. bside -d /dev/ttyUSB0)
+
+Known Issues:
+-------------
+	None at this time
+
+Reporting Bugs:
+---------------
+
+	Often help can be found in the #bstamp channel on irc.freenode.net
+
+	Otherwise please email bug reports to: devscott@charter.net
+	Please include
+
+	Stamp Vendor:
+	Stamp Model:
+	Stamp firmware: (if known)
+	BSide Version:
+	
+	Steps to recreate problem:
+
+
+About the PBasic Tokenizer Library:
+----------------------------
+  	The tokenizer is by Parallax, Inc., and released as a shared object (.so). As of this writing, it is only available as a binary (no source code), and only for x86-based Linux systems.
+
+	It is available, along with example code (upon which some of the code here is based) and documentation, from this page at Parallax's website: http://www.parallax.com/html_pages/downloads/tokenizer/tokenizer.asp
+
+About the BASIC Examples
+-------------------------
+	
+	Included are a bunch of simple examples to test your stamp. (located in examples/) Description for each are listed below.
+
+	Program:		Description				Vender
+	--------------------------------------------------------------------------
+	Hello_World.txt:	Prints "Hello World" to debug Window	Parallax
+	Hello_World.bas:	Prints "Hello World" to debug Window	Coridium
+

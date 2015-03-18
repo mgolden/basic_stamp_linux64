@@ -1,0 +1,52 @@
+BSide Changelog
+
+bside 0.05 September 25, 2006 ""
+	* Cleaned up argument handling in bside_tokenizer (Katie - katie@hoteldetective.org)
+	* General Code Clean up ( Scott - devscott@charter.net)
+	* General Code Clean up ( Katie - katie@hoteldetective.org)
+	*
+
+bside 0.04 August 28, 2006 "A boy named Sue"
+	* Fixed Bug where bside would hang if no stamp was connected (Scott - devscott@charter.net)
+	* Fixed Bug where program would run on -? argument (Scott - devscott@charter.net)
+	* Fixed Bug where Parallax Stamp wouldn't be closed after failed detection (Scott - devscott@charter.net)
+	* Fixed Bug where Coridium Stamp would not be started (Scott - devscott@charter.net)
+	* Fixed Possible Sigfault when invalid device is used (Scott - devscott@charter.net)
+	* More Documentation Updates ( Scott - devscott@charter.net)
+	* General Code Clean up (Scott - devscott@charter.net)
+	* Pushed version 0.04 (Scott - devscott@charter.net)
+
+bside 0.03  August 1, 2006 "Slow and Steady wins the race"
+	* Added read support for Coridium's ARMexpress (Scott  - devscott@charter.net)
+	* Updated man page to reflect the new support for Coridium Stamps (Scott  - devscott@charter.net)
+	* Updated the README to reflect the new support for Coridium Stamps (Scott - devscott@charter.net)
+	* Updated the README on USB Support (Scott - devscott@charter.net)
+	* Updated the INSTALL on USB Support (Scott - devscott@charter.net)
+	* Display Vender in Stamp info when detected ( Scott - devscott@charter.net)
+	* Created Vender Specific headers (Scott - devscott@charter.net)
+	* Moved all Vendor Specific code to it's header file (Scott - devscott@charter.net)
+	* Updated Makefile (Scott - devscott@charter.net)
+	* Fixed Bug where an invalid program slot could be set for Parallax stamps (Scott - devscott@charter.net)
+	* Fixed Bug where device wouldn't close on error. (Scott - devscott@charter.net)
+	* Fixed Bug where error messages were not being displayed (Scott - devscott@charter.net)
+
+bside 0.02.2 "A Second Time" June 26, 2006
+	* Fixed incorrect path for libbsidetokenizer (Katie - katie@hoteldetective.org)
+	* Updated man page (Scott - devscott@charter.net)
+	* Updated Install File (Adam - gnome@dux-linux.org)
+
+bside 0.02 "A Spoon Full of Cherries": June 26, 2006
+	* Created stamp.h stamp.cpp to handle stamp Model and firmware version 
+	*	-> This is an initial step to become more OO
+	*	(Scott - devscott@charter.net)
+
+	* Added -t option for test mode (Scott - devscott@charter.net)
+	* Added install file (Adam - gnome@dux-linux.org)
+	* Added Man Page (Jacob - jacob@appelbaum.net)
+	* Cleaned up stamp_sendFile() (Scott - devscott@charter.net)
+	* Added programSlots count to stamp.h (Scott - devscott@charter.net)
+	* Updated man page for test mode (Scott - devscott@charter.net)
+	* Fixed incorrect path for libbsidetokenizer (Katie - katie@hoteldetective.org)
+
+bside-0.01 "Happy Birthday":	June 15, 2006
+	* initial Release

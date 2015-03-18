@@ -1,0 +1,43 @@
+.TH "bside" 1
+.SH NAME
+ BSide(Basic Stamp IDE)
+.SH SYNOPSIS
+.B bside 
+[-vht?] [-d device] -f filename [-p program slot]
+.SH DESCRIPTION
+bside \- bside is a program for loading BASIC code onto a BASIC Stamp. bside supports all a number of different basic stamps including all 7 BASIC stamps by Parallax. It has the ability to pass custom program slots to the stamp. It is written in C and C++.
+.SH OPTIONS
+.TP
+.B \-h or \-?
+Print usage information. 
+.TP
+.B \-d
+Specify the path to the desired device. The default device is '/dev/ttyS0' 
+.TP
+.B \-f
+Specify the path to the file to load to the stamp.
+.TP
+.B \-v
+Print bside version information.
+.TP
+.B \-p
+Set custom program slot. As far as I know this is only used in Parallax's stamp.
+.TP
+.B \-t
+Test Mode (Run whatever is on the stamp)
+.TP
+.SH NOTES
+Basic Stamps from Parallax require the tokenizer library by Parallax, Inc. This tokenizer is a binary only shared object and non-free. A free version is planned by the bside project in the future. Please consider helping out!
+.SH EXAMPLES
+.TP
+bside -d /dev/ttyS1 -f filename
+.SH DEVICES
+bside supports both usb and serial interfaces. Please see the included INSTALL text for information on device creation.
+.SH LICENSE
+bside is released under version two of the GPL. Please see the license file.
+.SH SEE ALSO
+Please see the included INSTALL and README files for more information.
+.SH BUGS
+Please send bug reports to Scott Sloan <devscott@charter.net> with your stamp vendor, stamp model, stamp firmware, type of interface and the steps to recreate your issue.
+.SH AUTHORS
+bside was written by the bside team led by Scott Sloan <devscott@charter.net>. This manual page was originally written by Jacob Appelbaum <jacob@appelbaum.net>.

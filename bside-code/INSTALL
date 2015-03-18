@@ -1,0 +1,188 @@
+# Installation file for BSIDE
+#
+#
+# Please send all complaints or desired changes
+# to Scott (devscott@charter.net).
+#
+# PBASIC tokenizer library by, and some code based on 
+# examples from, Parallax, Inc.  Copyright (c) 2002.
+# All rights reserved.  http://www.parallax.com/
+#
+# PBASIC is a trademark and BASIC Stamp is a registered
+# trademark of Parallax, Inc.
+#
+# Linux is a trademark of Linus Torvalds.
+#
+# License: GPL  (version 2)
+# 
+# If you reference this help file elsewhere please make 
+# a note where you found it.  Thanks. 
+#
+# Last Updated: 08/6/06
+#
+
+NOTE: There are two ways you can compile and install bside.
+
+   1)  As the root (super) user. (NOT RECOMMENDED)
+   2)  Using the 'sudo' command.
+
+If you do not have the 'sudo' binary installed please
+search for the package (or source) using your favorite
+search engine and install it before proceeding.  Please
+make sure you've added your user to the /etc/sudoers 
+file.   
+
+COMPILATION/INSTALLATION:
+
+Steps to Install
+	1.) Download Source
+	2.) Unpack Source
+	3.) Compiling
+
+
+Step 1:
+Download the latest snapshot or stable release from:
+
+   http://devscott.org/projects/bside
+
+and save it in a directory of your choice. 
+
+Step 2:
+
+After downloading the file,  untar the file.  If you are unfamiliar with
+tar please execute the following command from the command
+line: 'man tar' (without the single quotes).  If that is not
+helpful please try the following:
+
+   tar -xvf bside-(release).tar
+
+   OR   
+
+   tar -xzvf bside-(release).tar.gz 
+
+You can ommit the -v option if you do not wish to see tar's 
+progress.  
+
+Step 3: 
+Now that we've "unpacked" the bside source you have one of two
+installation options:
+
+
+Installing as root:
+
+	    Execute the following 
+  	    command, then at the prompt, type your
+            root password and press enter:
+
+            su -
+
+            The dash/switch will give you full rights
+            as root user and also change you to the
+            root home directory.  You do not have to 
+            use the dash/switch option but it's the
+            safest option to avoid installation problems.
+
+            If you used the dash/switch please change
+            back to the bside directory.  Once you've
+            changed to the proper directory, we 
+            recommend you do the following before 
+            creating the binaries if you've
+            installed previous versions of bside:
+
+            make clean 
+  
+            After you've "cleaned" up you can 
+            make the 'bside_tokenizer' and 'bside'
+            binaries by typing:
+
+            make 
+
+            Once you've made the binaries you can install
+            them by typing:
+            
+            make install
+             
+            If necessary make com1 and com2 serial ports:
+
+            MAKEDEV /dev/ttyS0 (NOTE: Use a zero not an 'O'.)
+            MAKEDEV /dev/ttyS1             
+
+            If you have setup a symbolic link to the serial port,
+            you can use the link by passing it with the -d argument
+            at run time.  Please see help (bside -h) for usage.
+
+            You might also have to change the permissions on
+            your serial ports.  To do that you can select the
+            one you wish to use and issue the following command
+            as the root user:
+
+            chmod 666 /dev/ttyS0 
+
+            OR
+
+            chmod 666 /dev/ttySx  (where x is the number of the port)
+
+            Voila, you should now be able to use the     
+            command line version of bside.  
+
+            NOTE: Please be aware 'ldconfig' will be run
+                  as part of the 'make install' process.
+
+Installing using sudo:
+
+	    Once you've installed the 'sudo' binary (or source)
+            you can issue the following commands:
+
+            make clean
+
+            make (or 'make all')
+
+            sudo make install
+
+            If necessary make com1 or com2 serial port:
+
+            sudo MAKEDEV /dev/ttyS0  (NOTE: Use a zero not an 'O'.)
+            sudo MAKEDEV /dev/ttyS1 
+
+            If you have setup a symbolic link to the serial port, 
+            you can use the link by passing it with the -d argument
+            at run time.  Please see help (bside -h) for usage. 
+
+            You might also have to change the permissions on your
+            serial ports.  To do that you can select the one you 
+            wish to use and issue the following command
+            as the root user:
+
+            chmod 666 /dev/ttyS0
+  
+            OR
+
+            chmod 666 /dev/ttySx  (where x is the number of the port)
+
+            Voila, you should now be able to use the 
+            command line version of bside.
+
+            NOTE: Please be aware 'ldconfig will be run as part of
+                  the 'make install' process
+
+
+USB NOTES:    As you might have noticed we didn't mention anything
+              about USB support.  As it stands now, USB support is
+              EXPERIMENTAL but we know the current implementation
+              of bside USB support works, but we haven't fully
+              documented the features.  As an aside, the USB
+              interface chipset has native Linux support.              
+  
+              The Parallax and many other companies use an FTDI
+	      USB chipset to interface. An FTDI driver is included in
+	      all kernels passed 2.4.?. If your kernel is missing this 
+	      driver, please see your distrobutions documention on including it.
+
+              Once it is loaded as a module, you'll notice that it
+              attaches to /dev/ttyUSB0:
+
+              tail /var/log/messages | grep ttyUSB0
+
+	      You may then pass this device to bside by using the -d argument
+
+		Example:   bside -d /dev/ttyUSB0

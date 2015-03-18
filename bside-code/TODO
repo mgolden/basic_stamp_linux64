@@ -1,0 +1,11 @@
+TODO.txt for BSide: Basic Stamp IDE
+
+	* Create GTK GUI
+	* Create QT GUI
+	* Add Memory Map function (Parallax Stamps)
+	* Function to automatically detect which /dev the stamp is using
+	* Write OSS PBASIC tokenizer
+	* Autoconf
+	* ADD Read Support for Coridium's ARMexpress
+	* ADD Support for BasicX stamps
+	* ADD Support for zBasic Stamps

@@ -1,0 +1,7 @@
+'{$STAMP BS2}
+'{$PBASIC 2.5}
+
+Main:
+	Debug "Hello World", CR
+	Debug "Welcome to the BASIC Stamp IDE", CR
+End
