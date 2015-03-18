@@ -35,6 +35,8 @@ same as what's on the Parallax site, but v 2.1)
 * http://parallaxutiliti.sourceforge.net/ (Parallax Utilities, in Java,
 seemingly abandoned in the planning stage)
 
+* http://sourceforge.net/projects/bside/ (Update 3/16/2015 - found this IDE as well)
+
 It is readily apparent that no one has been doing much on these for several years at least.
 None can be used on a modern Linux machine as distributed.  There are several problems
 
@@ -105,7 +107,7 @@ When the board is plugged in to a USB port on my machine, it shows up as /dev/tt
 mode for this file is 660, and the group is "dialout".  To usefully run any of these programs,
 therefore, the user should be in this group:
 ```
-sudo usermod -a -G dialout
+sudo usermod -a -G dialout USERNAME
 ```
 
 ### Future
